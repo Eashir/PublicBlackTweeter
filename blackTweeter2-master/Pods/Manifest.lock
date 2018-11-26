@@ -1,0 +1,120 @@
+PODS:
+  - Alamofire (4.7.3)
+  - AlamofireImage (3.4.1):
+    - Alamofire (~> 4.7)
+  - CollieGallery (0.6.0)
+  - DrawerController (4.0.0):
+    - DrawerController/Core (= 4.0.0)
+    - DrawerController/DrawerVisualStates (= 4.0.0)
+  - DrawerController/Core (4.0.0)
+  - DrawerController/DrawerVisualStates (4.0.0):
+    - DrawerController/Core
+  - Firebase (5.0.1):
+    - Firebase/Core (= 5.0.1)
+  - Firebase/Core (5.0.1):
+    - Firebase/CoreOnly
+    - FirebaseAnalytics (= 5.0.0)
+  - Firebase/CoreOnly (5.0.1):
+    - FirebaseCore (= 5.0.1)
+  - Firebase/Database (5.0.1):
+    - Firebase/CoreOnly
+    - FirebaseDatabase (= 5.0.0)
+  - Firebase/Messaging (5.0.1):
+    - Firebase/CoreOnly
+    - FirebaseMessaging (= 3.0.0)
+  - FirebaseAnalytics (5.0.0):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+    - nanopb (~> 0.3)
+  - FirebaseCore (5.0.1):
+    - GoogleToolboxForMac/NSData+zlib (~> 2.1)
+  - FirebaseDatabase (5.0.0):
+    - FirebaseCore (~> 5.0)
+    - leveldb-library (~> 1.18)
+  - FirebaseInstanceID (3.0.0):
+    - FirebaseCore (~> 5.0)
+  - FirebaseMessaging (3.0.0):
+    - FirebaseCore (~> 5.0)
+    - FirebaseInstanceID (~> 3.0)
+    - GoogleToolboxForMac/Logger (~> 2.1)
+    - Protobuf (~> 3.1)
+  - FLAnimatedImage (1.0.12)
+  - GoogleToolboxForMac/Defines (2.1.4)
+  - GoogleToolboxForMac/Logger (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - GoogleToolboxForMac/NSData+zlib (2.1.4):
+    - GoogleToolboxForMac/Defines (= 2.1.4)
+  - ImageSlideshow (1.5.3):
+    - ImageSlideshow/Core (= 1.5.3)
+  - ImageSlideshow/Alamofire (1.5.3):
+    - AlamofireImage (~> 3.0)
+    - ImageSlideshow/Core
+  - ImageSlideshow/Core (1.5.3)
+  - Kingfisher (4.8.0)
+  - leveldb-library (1.20)
+  - Locksmith (4.0.0)
+  - nanopb (0.3.8):
+    - nanopb/decode (= 0.3.8)
+    - nanopb/encode (= 0.3.8)
+  - nanopb/decode (0.3.8)
+  - nanopb/encode (0.3.8)
+  - Protobuf (3.5.0)
+  - SDWebImage (4.3.3):
+    - SDWebImage/Core (= 4.3.3)
+  - SDWebImage/Core (4.3.3)
+  - SDWebImage/GIF (4.3.3):
+    - FLAnimatedImage (~> 1.0)
+    - SDWebImage/Core
+  - SJFluidSegmentedControl (1.1.2)
+  - SnapKit (4.0.0)
+  - SwiftLinkPreview (2.3.1)
+  - SwiftyDrop (4.1.0)
+
+DEPENDENCIES:
+  - Alamofire (= 4.7.3)
+  - CollieGallery
+  - DrawerController
+  - Firebase
+  - Firebase/Database
+  - Firebase/Messaging
+  - FLAnimatedImage
+  - ImageSlideshow (= 1.5.3)
+  - ImageSlideshow/Alamofire (= 1.5.3)
+  - Kingfisher (~> 4.0)
+  - Locksmith
+  - SDWebImage
+  - SDWebImage/GIF
+  - SJFluidSegmentedControl (~> 1.0)
+  - SnapKit (~> 4.0.0)
+  - SwiftLinkPreview (~> 2.3.1)
+  - SwiftyDrop (= 4.1.0)
+
+SPEC CHECKSUMS:
+  Alamofire: c7287b6e5d7da964a70935e5db17046b7fde6568
+  AlamofireImage: 78d67ccbb763d87ba44b21583d2153500a195630
+  CollieGallery: b8fcf63af6b31add2f435f5aee4742ae3b84cb3b
+  DrawerController: eb1168e9f7185cc49f654ae8486917f0acb3dc88
+  Firebase: d6861c2059d8c32d1e6dd8932e22ada346d90a3a
+  FirebaseAnalytics: 19812b49fa5f283dd6b23edf8a14b5d477029ab8
+  FirebaseCore: cafc814b2d84fc8733f09e653041cc2165332ad7
+  FirebaseDatabase: 697eb53e5b4fe7cd4fa8756c1f82a9fca011345f
+  FirebaseInstanceID: 83e0040351565df711a5db3d8ebe5ea21aca998a
+  FirebaseMessaging: f2360a966ecfb0d14facf0fbdf306efc2df0ddbe
+  FLAnimatedImage: 4a0b56255d9b05f18b6dd7ee06871be5d3b89e31
+  GoogleToolboxForMac: 91c824d21e85b31c2aae9bb011c5027c9b4e738f
+  ImageSlideshow: 24a1184909f589379ba2527ebcc77996881bb1f2
+  Kingfisher: 976d828df2b24834c6a3f2fc4d82cdbd26552be1
+  leveldb-library: 08cba283675b7ed2d99629a4bc5fd052cd2bb6a5
+  Locksmith: e9bebbaaa4cee3c511bc358a44f843c3fe00e21f
+  nanopb: 5601e6bca2dbf1ed831b519092ec110f66982ca3
+  Protobuf: 8a9838fba8dae3389230e1b7f8c104aa32389c03
+  SDWebImage: de4d90b5bff3571eae7bd16202b1f43135409fa5
+  SJFluidSegmentedControl: efd26ea5f0832c715e2750314a2dc0cc81e39ae5
+  SnapKit: a42d492c16e80209130a3379f73596c3454b7694
+  SwiftLinkPreview: 7fa103fdbf20f1644c23289dc5ebc01425d997ab
+  SwiftyDrop: bdcaa52e6127790f2e382df4fd56c32da8b8cc57
+
+PODFILE CHECKSUM: 3bea1dddf75c56ab744707a82638c73f9f5a0203
+
+COCOAPODS: 1.4.0

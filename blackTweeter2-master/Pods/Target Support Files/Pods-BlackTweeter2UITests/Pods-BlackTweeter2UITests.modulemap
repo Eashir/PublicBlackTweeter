@@ -1,0 +1,6 @@
+framework module Pods_BlackTweeter2UITests {
+  umbrella header "Pods-BlackTweeter2UITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

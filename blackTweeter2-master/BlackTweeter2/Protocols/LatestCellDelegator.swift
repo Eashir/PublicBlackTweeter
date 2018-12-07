@@ -8,7 +8,7 @@
 
 import Foundation
 
-protocol LatestCellDelegator {
+protocol LatestCellDelegator: class {
     func goToProfilePage(userID dataobjectUID: String, profileImage dataProfileImage: UIImageView)
     func goToProfNaked(userId dataobjectUID: String)
     func goReplyToTweet(tweetID dataTweetID: String)

@@ -145,7 +145,7 @@
                                                                                 <constraint firstAttribute="height" constant="50" id="mH6-AA-mu0"/>
                                                                             </constraints>
                                                                         </imageView>
-                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:IDH-Nk-MZ2:image" translatesAutoresizingMaskIntoConstraints="NO" id="rDC-iS-KAZ">
+                                                                        <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="imageView:IDH-Nk-MZ2:image" translatesAutoresizingMaskIntoConstraints="NO" id="rDC-iS-KAZ">
                                                                             <rect key="frame" x="145" y="0.0" width="150" height="32"/>
                                                                             <constraints>
                                                                                 <constraint firstAttribute="height" constant="50" id="NBm-W9-QZ5"/>
@@ -438,11 +438,11 @@
             <objects>
                 <viewController storyboardIdentifier="AuthViewReal" id="bjk-7i-rj6" customClass="AuthViewReal" customModule="BlackTweeter2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="TEc-xP-pTV">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="900"/>
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="800"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yMx-FO-Iso" customClass="TWTButton" customModule="BlackTweeter2" customModuleProvider="target">
-                                <rect key="frame" x="16" y="793" width="146" height="30"/>
+                                <rect key="frame" x="16" y="693" width="146" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title=" LOG INTO TWITTER ">
                                     <color key="titleColor" red="0.24939853000000001" green="0.16310585599999999" blue="0.081510339249999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -452,7 +452,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" alpha="0.69999999999999996" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zd-Tg-VOR" userLabel="Log In a Different Accont" customClass="TWTButton" customModule="BlackTweeter2" customModuleProvider="target">
-                                <rect key="frame" x="16" y="835" width="63" height="30"/>
+                                <rect key="frame" x="16" y="735" width="63" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="15"/>
                                 <state key="normal" title=" Log Out ">
                                     <color key="titleColor" red="0.24939853000000001" green="0.16310585599999999" blue="0.081510339249999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -539,7 +539,7 @@
                         <viewLayoutGuide key="safeArea" id="RL1-ra-Acp"/>
                     </view>
                     <navigationItem key="navigationItem" id="H7E-h6-vwj"/>
-                    <size key="freeformSize" width="375" height="900"/>
+                    <size key="freeformSize" width="375" height="800"/>
                     <connections>
                         <outlet property="loginButton" destination="yMx-FO-Iso" id="vHX-wz-So4"/>
                         <outlet property="logoutButton" destination="8zd-Tg-VOR" id="Szb-rZ-rcF"/>
@@ -724,7 +724,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="yl2-sM-qoP">
             <objects>
-                <tabBarController storyboardIdentifier="TabBarController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="TabBarController" customModule="BlackTweeter2" customModuleProvider="target" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" useStoryboardIdentifierAsRestorationIdentifier="YES" id="49e-Tb-3d3" customClass="TabBarController" customModule="BlackTweeter2" customModuleProvider="target" sceneMemberID="viewController">
                     <tabBar key="tabBar" contentMode="scaleToFill" id="W28-zg-YXA">
                         <rect key="frame" x="0.0" y="975" width="768" height="49"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -769,18 +769,18 @@
                                         </constraints>
                                     </view>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="eUr-US-vXF">
-                                        <rect key="frame" x="0.0" y="0.0" width="375" height="40"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="50"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Person Man" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jA2-4r-v3b">
-                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="40"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jA2-4r-v3b">
+                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="50"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                 <color key="textColor" red="0.58039215690000001" green="0.82745098039999998" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
                                                 <color key="shadowColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                 <size key="shadowOffset" width="1" height="1"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@Dumb__Username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCP-Fm-AGt">
-                                                <rect key="frame" x="131.5" y="0.0" width="112" height="40"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="@" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KCP-Fm-AGt">
+                                                <rect key="frame" x="131.5" y="0.0" width="112" height="50"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <color key="textColor" red="0.58039215690000001" green="0.82745098039999998" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -788,7 +788,7 @@
                                                 <size key="shadowOffset" width="1" height="1"/>
                                             </label>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jq9-fU-oAg">
-                                                <rect key="frame" x="263.5" y="0.0" width="111.5" height="40"/>
+                                                <rect key="frame" x="263.5" y="0.0" width="111.5" height="50"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="13"/>
                                                 <size key="titleShadowOffset" width="1" height="1"/>
                                                 <state key="normal" title="Follow">
@@ -809,25 +809,25 @@
                                         <rect key="frame" x="70" y="90" width="305" height="70"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="248" text="" lineBreakMode="wordWrap" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mef-xM-sax">
-                                                <rect key="frame" x="8" y="0.0" width="289" height="50"/>
+                                                <rect key="frame" x="8" y="0.0" width="289" height="63.5"/>
                                                 <fontDescription key="fontDescription" type="system" weight="medium" pointSize="12"/>
                                                 <color key="textColor" red="0.2470588235" green="0.1647058824" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="213" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MGh-rH-bRE">
-                                                <rect key="frame" x="8" y="52.5" width="20.5" height="13.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" verticalCompressionResistancePriority="751" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MGh-rH-bRE">
+                                                <rect key="frame" x="8" y="66" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                 <color key="textColor" red="0.2470588235" green="0.1647058824" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="710" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MoZ-dG-t2Y">
-                                                <rect key="frame" x="42.5" y="52.5" width="20.5" height="13.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="MoZ-dG-t2Y">
+                                                <rect key="frame" x="22" y="66" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                 <color key="textColor" red="0.2470588235" green="0.1647058824" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="659203 Tweets" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zbu-3n-FdU">
-                                                <rect key="frame" x="77" y="52.5" width="88" height="13.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zbu-3n-FdU">
+                                                <rect key="frame" x="36" y="66" width="0.0" height="0.0"/>
                                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="11"/>
                                                 <color key="textColor" red="0.2470588235" green="0.1647058824" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <nil key="highlightedColor"/>
@@ -1002,7 +1002,7 @@
         <!--BlackTweeter ✊🏾-->
         <scene sceneID="Bt2-cv-y75">
             <objects>
-                <viewController id="kLW-2t-zhe" customClass="TimelineViewController3" customModule="BlackTweeter2" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="kLW-2t-zhe" customClass="TimelineViewController3" customModule="BlackTweeter2" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="9Vs-wd-1ex">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1205,7 +1205,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="blackTweeterIconCut" width="493" height="481"/>
+        <image name="blackTweeterIconCut" width="246" height="240"/>
         <image name="button:1BS-p7-d2j:image" width="19" height="11">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
@@ -6309,9 +6309,9 @@ AAAAAAAAPgw
 </mutableData>
         </image>
         <image name="menu_icon" width="128" height="128"/>
-        <image name="message" width="40" height="40"/>
-        <image name="sign" width="40" height="40"/>
-        <image name="timeline" width="40" height="40"/>
+        <image name="message" width="25" height="25"/>
+        <image name="sign" width="25" height="25"/>
+        <image name="timeline" width="25" height="25"/>
     </resources>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

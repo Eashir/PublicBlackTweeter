@@ -22,10 +22,10 @@ protocol CustomCellUpdater: class { // the name of the protocol you can put any
 
 class LatestCell: UITableViewCell {
     
-    var delegate: LatestCellDelegator!
+    weak var delegate: LatestCellDelegator!
     weak var customCelldelegate: CustomCellUpdater?
     //https://github.com/gmunhoz/CollieGallery
-    var collieDelegate: CollieGalleryDelegate!
+    weak var collieDelegate: CollieGalleryDelegate!
     
     @IBOutlet weak var adBar: UILabel!
     
@@ -41,7 +41,7 @@ class LatestCell: UITableViewCell {
 //    @IBOutlet weak var FourthImageView: UIImageView!
     @IBOutlet weak var gifStackView: UIStackView!
     
-    @IBOutlet fileprivate weak var statusImage0: UIImageView!
+    @IBOutlet weak var statusImage0: UIImageView!
     @IBOutlet weak var statusImage1: UIImageView!
     @IBOutlet weak var statusImage2: UIImageView!
     @IBOutlet weak var statusImage3: UIImageView!
@@ -81,7 +81,7 @@ class LatestCell: UITableViewCell {
     @IBOutlet weak var RTAllPicsStackView: UIStackView!
     @IBOutlet weak var RTVideoSuperView: UIView!
     
-    @IBOutlet fileprivate weak var RTstatusImage0: UIImageView!
+    @IBOutlet weak var RTstatusImage0: UIImageView!
     @IBOutlet weak var RTstatusImage1: UIImageView!
     @IBOutlet weak var RTstatusImage2: UIImageView!
     @IBOutlet weak var RTstatusImage3: UIImageView!
@@ -94,13 +94,11 @@ class LatestCell: UITableViewCell {
     var printUserId: String?
     var printTweetText: String?
     var printUsername: String?
-    let TWITTER_CONSUMER_KEY = UserDefaults.standard.object(forKey: "twitterConsumerKey")
-    let TWITTER_CONSUMER_SECRET_KEY = UserDefaults.standard.object(forKey: "twitterConsumerSecretKey")
-    let OAUTH_TOKEN = "928135071521017856-7w0pKnkd6Z3fsCkIjwpjZFlSzD1RkDL" //GET_YOUR_OWN_KEY
-    let OAUTH_TOKEN_SECRET = "RUViQbwNK1o2IThlJe4LyK3AWo6mwIdGp7fJje5M9l9z6"//GET_YOUR_OWN_KEY
-    let CALLBACK_URL = "http://www.google.com"
+
     let profileJpgString: String = "_bigger.jpg"
-    var swifter: Swifter?
+    var swifter: Swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
+    //Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
+    
     var likeOutside: Bool?
     var retweetOutside: Bool?
     
@@ -149,6 +147,68 @@ class LatestCell: UITableViewCell {
         deleteTweet()
     }
     
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        // Initialization code
+        setupUI()
+        setupMoviePlayer()
+        setupMoviePlayerRT()
+    }
+    
+    func setupUI(){
+        
+        profileImageView.layer.cornerRadius = 10.0
+        profileImageView.clipsToBounds = true
+        
+        getGifButton?.backgroundColor = .clear
+        getGifButton?.layer.cornerRadius = 10
+        getGifButton?.layer.borderWidth = 1
+        getGifButton?.layer.borderColor = AppConstants.tweeterBrown.cgColor
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profPicClick(tapGestureRecognizer:)))
+        
+        profileImageView?.isUserInteractionEnabled = true
+        profileImageView?.addGestureRecognizer(tapGestureRecognizer)
+        
+        let tapFullNameGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profPicClick(tapFullNameGestureRecognizer:)))
+        cellFullName.isUserInteractionEnabled = true
+        cellFullName.addGestureRecognizer(tapFullNameGestureRecognizer)
+        
+        let tapNakedRecognizer = UITapGestureRecognizer(target: self, action: #selector(profPicClick(tapNakedGestureRecognizer:)))
+        cellUsername.isUserInteractionEnabled = true
+        cellUsername.addGestureRecognizer(tapNakedRecognizer)
+        
+        let galleryTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(statusImageClick(galleryTapGestureRecog:)))
+        AllPicsStackView?.isUserInteractionEnabled = true
+        AllPicsStackView?.addGestureRecognizer(galleryTapGestureRecog)
+        
+        let RTgalleryTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(statusImageClick(galleryTapGestureRecog:)))
+        RTAllPicsStackView?.isUserInteractionEnabled = true
+        RTAllPicsStackView?.addGestureRecognizer(RTgalleryTapGestureRecog)
+        
+        let videoTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(videoPlayerSuperviewClick(videoGestureRecognizer:)))
+        videoPlayerSuperview?.isUserInteractionEnabled = true
+        videoPlayerSuperview?.addGestureRecognizer(videoTapGestureRecog)
+        
+        let RTvideoTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(videoPlayerSuperviewClickRT(videoGestureRecognizer:)))
+        RTVideoSuperView?.isUserInteractionEnabled = true
+        RTVideoSuperView?.addGestureRecognizer(RTvideoTapGestureRecog)
+        
+        let backgroundTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(backgroundClick(backgroundGestureRecognizer:)))
+        //fullBackground.isUserInteractionEnabled = true
+        fullBackground.addGestureRecognizer(backgroundTapGestureRecog)
+        
+        let previewTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(previewTitleClick(previewGestureRecognizer:)))
+        let previewTapGestureRecog2 = UITapGestureRecognizer(target: self, action: #selector(previewTitleClick(previewGestureRecognizer:)))
+        let previewTapGestureRecog3 = UITapGestureRecognizer(target: self, action: #selector(previewTitleClick(previewGestureRecognizer:)))
+        
+        previewTitle?.isUserInteractionEnabled = true
+        slideshow?.isUserInteractionEnabled = true
+        previewCanonicalUrl?.isUserInteractionEnabled = true
+        previewTitle?.addGestureRecognizer(previewTapGestureRecog)
+        slideshow?.addGestureRecognizer(previewTapGestureRecog2)
+        previewCanonicalUrl?.addGestureRecognizer(previewTapGestureRecog3)
+    }
     
     //THIS IS HOW WE SET THE VIDEO IN THE VIEW: youre going to have to do alot more look here: https://stackoverflow.com/questions/33702490/embedding-videos-in-a-tableview-cell
     var videoPlayerItem: AVPlayerItem? = nil {
@@ -173,10 +233,6 @@ class LatestCell: UITableViewCell {
     
     var latestStatus: LatestStatus? {
         didSet {
-            getGifButton?.backgroundColor = .clear
-            getGifButton?.layer.cornerRadius = 10
-            getGifButton?.layer.borderWidth = 1
-            getGifButton?.layer.borderColor = AppConstants.tweeterBrown.cgColor 
             
             //self.getGifButton?.isHidden = false
             RetweetedByLabel.isHidden = true
@@ -223,7 +279,7 @@ class LatestCell: UITableViewCell {
             }
             
             if (tokenDictionary != nil ){
-                if (tokenDictionary!["realUserId"] as! String != nil){
+                if (tokenDictionary!["realUserId"] as? String != nil){
                     myId = tokenDictionary!["realUserId"] as? String
                 }
             } else {
@@ -231,88 +287,59 @@ class LatestCell: UITableViewCell {
             }
             
             
-            if (myId == latestStatus?.userId as! String){
+            if (myId == latestStatus?.userId){
                 self.trashButton.isHidden = false
             }
             
             if let fullName = latestStatus?.textFullName{
                 self.cellFullName.text = fullName
+            }else{
+                self.cellFullName.text = ""
             }
             
             if let retweetedBy = latestStatus?.retweetedBy{
                 RetweetedByLabel.isHidden = false
                 self.RetweetedByLabel.text = "Retweeted By: \(retweetedBy)"
+            }else{
+                self.RetweetedByLabel.text = ""
             }
             
             if let userName = latestStatus?.textUsername {
                 self.cellUsername.text = "@\(userName)"
+            }else{
+                self.cellUsername.text = ""
             }
             
             if let timestamp = latestStatus?.timeStamp {
                 self.cellTimestamp.text = timestamp
+            }else{
+                self.cellTimestamp.text = ""
             }
             
             
             if let profileImageUrl = latestStatus?.profileImageUrl {
                 profileImageView.sd_setImage(with: URL(string: profileImageUrl), placeholderImage: UIImage(named: "default_profile_.png"))
-                profileImageView.layer.cornerRadius = 10.0
-                profileImageView.clipsToBounds = true
+            }else{
+                profileImageView.image = UIImage(named: "default_profile_.png")
             }
             
             if let rtFullName = latestStatus?.RTFullName{
                 self.RTFullName.text = rtFullName
             }
+            
             if let rtUsername = latestStatus?.RTUsername{
                 self.RTUsername.text = "@\(rtUsername)"
+            }else{
+                self.RTUsername.text = ""
             }
-            if var rtTextString = latestStatus?.RTText{
+            
+            if let rtTextString = latestStatus?.RTText{
                 self.RTText.text = rtTextString
+            }else{
+                self.RTText.text = ""
             }
             
             
-            let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profPicClick(tapGestureRecognizer:)))
-            
-            profileImageView?.isUserInteractionEnabled = true
-            profileImageView?.addGestureRecognizer(tapGestureRecognizer)
-            
-            let tapFullNameGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profPicClick(tapFullNameGestureRecognizer:)))
-            cellFullName.isUserInteractionEnabled = true
-            cellFullName.addGestureRecognizer(tapFullNameGestureRecognizer)
-            
-            let tapNakedRecognizer = UITapGestureRecognizer(target: self, action: #selector(profPicClick(tapNakedGestureRecognizer:)))
-            cellUsername.isUserInteractionEnabled = true
-            cellUsername.addGestureRecognizer(tapNakedRecognizer)
-            
-            let galleryTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(statusImageClick(galleryTapGestureRecog:)))
-            AllPicsStackView?.isUserInteractionEnabled = true
-            AllPicsStackView?.addGestureRecognizer(galleryTapGestureRecog)
-            
-            let RTgalleryTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(statusImageClick(galleryTapGestureRecog:)))
-            RTAllPicsStackView?.isUserInteractionEnabled = true
-            RTAllPicsStackView?.addGestureRecognizer(RTgalleryTapGestureRecog)
-            
-            let videoTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(videoPlayerSuperviewClick(videoGestureRecognizer:)))
-            videoPlayerSuperview?.isUserInteractionEnabled = true
-            videoPlayerSuperview?.addGestureRecognizer(videoTapGestureRecog)
-            
-            let RTvideoTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(videoPlayerSuperviewClickRT(videoGestureRecognizer:)))
-            RTVideoSuperView?.isUserInteractionEnabled = true
-            RTVideoSuperView?.addGestureRecognizer(RTvideoTapGestureRecog)
-            
-            let backgroundTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(backgroundClick(backgroundGestureRecognizer:)))
-            //fullBackground.isUserInteractionEnabled = true
-            fullBackground.addGestureRecognizer(backgroundTapGestureRecog)
-            
-            let previewTapGestureRecog = UITapGestureRecognizer(target: self, action: #selector(previewTitleClick(previewGestureRecognizer:)))
-            let previewTapGestureRecog2 = UITapGestureRecognizer(target: self, action: #selector(previewTitleClick(previewGestureRecognizer:)))
-            let previewTapGestureRecog3 = UITapGestureRecognizer(target: self, action: #selector(previewTitleClick(previewGestureRecognizer:)))
-            
-            previewTitle?.isUserInteractionEnabled = true
-            slideshow?.isUserInteractionEnabled = true
-            previewCanonicalUrl?.isUserInteractionEnabled = true
-            previewTitle?.addGestureRecognizer(previewTapGestureRecog)
-            slideshow?.addGestureRecognizer(previewTapGestureRecog2)
-            previewCanonicalUrl?.addGestureRecognizer(previewTapGestureRecog3)
             
             
             //THIS IS HOW WE SET THE VIDEO IN THE VIEW: youre going to have to do alot more look here: https://stackoverflow.com/questions/33702490/embedding-videos-in-a-tableview-cell
@@ -366,14 +393,20 @@ class LatestCell: UITableViewCell {
                 }
                 
                 self.cellLatestTweet.text = textString
+            }else{
+                self.cellLatestTweet.text = ""
             }
             
             if let likeCount = latestStatus?.likeCount {
                 self.likeButton.setTitle(" \(likeCount)", for: .normal)
+            }else{
+                self.likeButton.setTitle("", for: .normal)
             }
             
             if let retweetCount = latestStatus?.retweetCount {
                 self.retweetButton.setTitle(" \(retweetCount)", for: .normal)
+            }else{
+                self.retweetButton.setTitle("", for: .normal)
             }
             
             printTweetId = latestStatus?.tweetId
@@ -562,7 +595,9 @@ class LatestCell: UITableViewCell {
         RTstatusImage1.image = nil
         RTstatusImage2.image = nil
         RTstatusImage3.image = nil
-        pictures = []
+        
+        pictures.removeAll()
+        
        // var images: [InputSource] = []
         self.slideshow?.setImageInputs([])
         self.previewCanonicalUrl?.text = nil
@@ -727,11 +762,11 @@ class LatestCell: UITableViewCell {
     @objc func profPicClick(tapGestureRecognizer: UITapGestureRecognizer)
     {
         print("profile pic clicked")
-        var transImage = tapGestureRecognizer.view as! UIImageView
+        let transImage = tapGestureRecognizer.view as! UIImageView
         let fUserId = printUserId
         print("fuserid: ", fUserId)
         if(self.delegate != nil){ //Just to be safe.
-            self.delegate.goToProfilePage(userID: fUserId!, profileImage: transImage as! UIImageView)
+            self.delegate.goToProfilePage(userID: fUserId!, profileImage: transImage )
         }else{
             print("self.delegate is nil")
         }
@@ -759,7 +794,7 @@ class LatestCell: UITableViewCell {
         options.parallaxFactor = 0.8
         options.maximumZoomScale = 2.5
         // options.gapBetweenPages = 20
-        var gallery = CollieGallery(pictures: pictures, options: options)
+        let gallery = CollieGallery(pictures: pictures, options: options)
         if (self.collieDelegate != nil){
             self.collieDelegate?.gallery!(gallery, indexChangedTo: 0)
         }
@@ -803,8 +838,7 @@ class LatestCell: UITableViewCell {
     
     @objc func videoClick(tapGestureRecognizer: UITapGestureRecognizer)
     {
-        var transVideo = tapGestureRecognizer.view as! UIView
-        let playerController : AVPlayerViewController = {
+        let _ : AVPlayerViewController = {
             
             if let urlForPlayer = URL(string: "your_video_url") {
                 $0.player = AVPlayer(url: urlForPlayer)
@@ -880,8 +914,8 @@ class LatestCell: UITableViewCell {
             self.makeToast("Liked 👍🏾", duration: 2.0, position: .center, style: self.style)
         }
         if (self.likeOutside == false){
-            swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
-            swifter?.favoriteTweet(forID: printTweetId!, includeEntities: false, tweetMode: TweetMode.default, success: { json in
+            
+            swifter.favoriteTweet(forID: printTweetId!, includeEntities: false, tweetMode: TweetMode.default, success: { json in
                 print ("now liking")
                 
                 self.likeOutside = true
@@ -893,8 +927,8 @@ class LatestCell: UITableViewCell {
                 self.makeToast("Liked 👍🏾", duration: 2.0, position: .center, style: self.style)
             }, failure: failureHandler)
         }else if (self.likeOutside == true){
-            swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
-            swifter?.unfavoriteTweet(forID: printTweetId!, includeEntities: false, tweetMode: TweetMode.default, success: { json in
+            
+            swifter.unfavoriteTweet(forID: printTweetId!, includeEntities: false, tweetMode: TweetMode.default, success: { json in
                 self.likeOutside = false
                 print ("now UNliking")
                 let row = sender.tag
@@ -915,8 +949,8 @@ class LatestCell: UITableViewCell {
         }
         
         if (self.retweetOutside == false){
-            swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
-            swifter?.retweetTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.default, success: { json in
+        
+            swifter.retweetTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.default, success: { json in
                 self.retweetOutside = true
                 let row = sender.tag
                 self.style.backgroundColor = AppConstants.tweeterDarkGreen
@@ -928,8 +962,8 @@ class LatestCell: UITableViewCell {
                 
             }, failure: failureHandler)
         }else if (self.retweetOutside == true){
-            swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
-            swifter?.unretweetTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.default, success: { json in
+            
+            swifter.unretweetTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.default, success: { json in
                 self.retweetOutside = false
                 let row = sender.tag
                 self.style.backgroundColor = AppConstants.tweeterDarkGreen
@@ -963,13 +997,6 @@ class LatestCell: UITableViewCell {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Aight", style: .default, handler: nil))
         uivc.present(alert, animated: true, completion: nil)
-    }
-    
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        setupMoviePlayer()
-        setupMoviePlayerRT()
     }
     
     func setupMoviePlayer(){
@@ -1072,8 +1099,8 @@ class LatestCell: UITableViewCell {
             print("Was unable to delete 😕 because of an error: \(error.localizedDescription)")
             self.alert(title: "Damn son...", message: "Was unable to delete 😕 because of an error: \(error.localizedDescription)", uivc: self.parentViewController!)
         }
-        swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
-        swifter?.destroyTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.extended, success: { json in
+        
+        swifter.destroyTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.extended, success: { json in
             // print(json)
             self.parentViewController?.toastMessage("Poof! Gone")
             self.reloadTalbeveiwInsideOfCell()

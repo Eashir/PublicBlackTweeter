@@ -17,15 +17,16 @@ import Locksmith
 class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate, BEMCheckBoxDelegate {
     
     var swifter: Swifter?
-    let TWITTER_CONSUMER_KEY = UserDefaults.standard.object(forKey: "twitterConsumerKey")
-    let TWITTER_CONSUMER_SECRET_KEY = UserDefaults.standard.object(forKey: "twitterConsumerSecretKey")
-    let CALLBACK_URL = "http://www.google.com"
+
     var tokenDictionary = Locksmith.loadDataForUserAccount(userAccount: "BlackTweeter")
     var tweetMedia: [String: Any]?
     public var tweetID: String?
     public var initTweetText: String?
     public var initUsername: String?
     var replyUsername: String?
+    
+    var retweetOverFlag: Bool = false
+    
     // @IBOutlet weak var isSwitched: UISwitch!
     @IBOutlet weak var numberOfChar: UILabel!
     @IBOutlet weak var tweetTextView: UITextView!
@@ -35,6 +36,8 @@ class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePicker
     @IBOutlet weak var inReplyLabel: UILabel!
     
     @IBOutlet weak var sarcasmCheckbox: BEMCheckBox!
+    
+    @IBOutlet weak var imageView: UIImageView!
     
     //    @IBAction func picSwitcher(_ sender: Any) {
     //        if isSwitched.isOn  {
@@ -61,9 +64,7 @@ class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePicker
     @IBAction func sendTweet(_ sender: Any) {
         
     }
-    
-    @IBOutlet weak var imageView: UIImageView!
-    
+
     @IBAction func chooseImage(_ sender: Any) {
         let imagePickerController = UIImagePickerController()
         imagePickerController.delegate = self
@@ -114,15 +115,30 @@ class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePicker
         let newLength: Int = (textView.text as NSString).length + (text as NSString).length - range.length
         let remainingChar:Int = 280 - newLength
         
-        numberOfChar.text = "\(remainingChar)"
-        if remainingChar < 14 {
-            //numberOfChar.text = "0"
-            numberOfChar.textColor = UIColor.red
-        } else {
-            numberOfChar.textColor = AppConstants.tweeterBrown //UIColor.black 
-            numberOfChar.text = "\(remainingChar)"
+        var enableFlag = (newLength) > 280 ? false : true
+        
+        if retweetOverFlag {
+            if enableFlag {
+                retweetOverFlag = false
+            }else{
+                if newLength > textView.text.count {
+                    enableFlag = true
+                }else{
+                    enableFlag = true
+                }
+            }
         }
-        return (newLength) > 280 ? false : true
+        
+        if enableFlag {
+            numberOfChar.text = "\(remainingChar)"
+            if remainingChar < 14 {
+                numberOfChar.textColor = UIColor.red
+            } else {
+                numberOfChar.textColor = AppConstants.tweeterBrown //UIColor.black
+            }
+        }
+        
+        return enableFlag
     }
     
     
@@ -130,8 +146,7 @@ class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePicker
         super.viewDidLoad()
         sarcasmCheckbox.delegate = self
         
-        
-        self.swifter = Swifter(consumerKey: self.TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
+        self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY , oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
         
         let failureHandler: (Error) -> Void = { error in
             print("Yeaaa...so theres a problem with you network 😕.")
@@ -153,8 +168,12 @@ class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePicker
         }
         // tweetTextView.text = "This me saying something really really sarcastic haha 😜"
         if ((initTweetText != nil) && (initUsername != nil)){
+            
             tweetTextView.text = "'@" + initUsername! + " " + initTweetText! + "\n - RT'd using #BlackTweeterApp -'"
-            self.numberOfChar.text = String(280-tweetTextView.text.count)
+            let len = 280-tweetTextView.text.count
+            retweetOverFlag = len < 0 ? true : false
+            self.numberOfChar.text = String( len )
+            
         }else if (initUsername != nil){
             tweetTextView.text = initUsername
         }else {

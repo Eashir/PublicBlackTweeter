@@ -17,14 +17,18 @@ import UserNotifications
 
 //how to autoarrange text CTRL + I
 
+let TWITTER_CONSUMER_KEY = "UtRNXcs08szsUw7kSJOso9aWY"
+let TWITTER_CONSUMER_SECRET_KEY = "HvNG0OzkAGKBXZxxLXIp0vqCfhinHMytYukMmUy89YjmyaXrhP"
+
+let OAUTH_TOKEN = "928135071521017856-7w0pKnkd6Z3fsCkIjwpjZFlSzD1RkDL" //GET_YOUR_OWN_KEY
+let OAUTH_TOKEN_SECRET = "RUViQbwNK1o2IThlJe4LyK3AWo6mwIdGp7fJje5M9l9z6"//GET_YOUR_OWN_KEY
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate  {
     
     var window: UIWindow?
     var drawerContainer : MMDrawerController?
     static var onBoardingCompleted: Bool?
-    
-    
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -44,8 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Messaging.messaging().delegate = self
         Messaging.messaging().shouldEstablishDirectChannel = true
         showPushNotification(application: application)
-        UserDefaults.standard.set("UtRNXcs08szsUw7kSJOso9aWY9420", forKey: "twitterConsumerKey") //GET_YOUR_OWN_KEY
-        UserDefaults.standard.set("HvNG0OzkAGKB9420XZxxLXIp0vqCfhinHMytYukMmUy89YjmyaXrhP", forKey: "twitterConsumerSecretKey")//GET_YOUR_OWN_KEY
         
         return true
     }

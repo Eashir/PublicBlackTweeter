@@ -53,20 +53,11 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
     var firstLoad = true
     var visibleIP : IndexPath?
     
-    let TWITTER_CONSUMER_KEY = UserDefaults.standard.object(forKey: "twitterConsumerKey")
-    let TWITTER_CONSUMER_SECRET_KEY = UserDefaults.standard.object(forKey: "twitterConsumerSecretKey")
-    let CALLBACK_URL = "http://www.google.com"
     var swifter: Swifter?
-    static var universalLoadChecker: Bool = false
-    
-    var twitterWebview : UIWebView?
-    
+   
     private let reuseIdentifier = "collectionCell"
     var changeableTweetsArray: [LatestStatus]?
     var allowedToReload = true
-    
-    //  let cellIdentifier: String = "cell" //not necessary
-    
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -280,7 +271,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var categoryArray = fBKeyStringArray
-        var selectedCategory = categoryArray[indexPath.row % changingFirebaseCount]
+        let selectedCategory = categoryArray[indexPath.row % changingFirebaseCount]
         categoryLabel.text = selectedCategory
         
         print("selected category: ", selectedCategory)
@@ -470,7 +461,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
         }
         
         if (tokenDictionary != nil) {
-            self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
+            self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
             
             
             firebaseDispatch.notify(queue: .main) {

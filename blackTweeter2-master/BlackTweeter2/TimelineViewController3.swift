@@ -40,21 +40,10 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
     var avPlayerLayer: AVPlayerLayer!
     var firstLoad = true
     
-    let TWITTER_CONSUMER_KEY = UserDefaults.standard.object(forKey: "twitterConsumerKey")
-    let TWITTER_CONSUMER_SECRET_KEY = UserDefaults.standard.object(forKey: "twitterConsumerSecretKey")
-    let CALLBACK_URL = "http://www.google.com"
     var swifter: Swifter?
-    static var universalLoadChecker: Bool = false
+    
     private var latestStatuses: [LatestStatus] = []
     var tweetsArray : [JSON] = []
-    
-    let vw = UIView()
-    var twitterWebview : UIWebView?
-    var blurEffectView: UIVisualEffectView?
-    var backgroundIsBlurred = false
-    
-    //    static var favoriteSelected:[Bool] = Array(repeating: false, count: 198)
-    //    static var retweetSelected:[Bool] = Array(repeating: false, count: 198)
     
     //this is done everytime the reload button is clicked
     func clearOutAndRefresh () {
@@ -98,7 +87,6 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
         super.viewWillAppear(animated)
         
         thisTableview.isScrollEnabled = true
-        backgroundIsBlurred = false
     }
     
     override func viewDidLoad() {
@@ -151,7 +139,7 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
             //            print("timeline dic accesstokenKey:\(tokenDictionary!["accessTokenKey"] as! String)")
             //            print("timeline dic accesstokenSecret:\(tokenDictionary!["accessTokenSecret"] as! String)")
             
-            self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
+            self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
             
             if (self.swifter == nil) {
                 print("the account is nil!")

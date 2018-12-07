@@ -17,11 +17,14 @@ class ReusableTableView:  NSObject, UITableViewDataSource, UITableViewDelegate, 
 {
     public static var profTableviewScrolled: Bool = false
     public static var backgroundIsBlurred = false
+    
+    var parentCollectionController: UIViewController?
+    
     var blurEffectView: UIVisualEffectView?
-    public var parentCollectionController: UIViewController?
     var twitterWebview : UIWebView?
     
     public var tableView: UITableView?
+    
     var tableViewData: [LatestStatus]?
     let storyboard = UIStoryboard(name: "Main", bundle: nil)
     
@@ -89,9 +92,9 @@ class ReusableTableView:  NSObject, UITableViewDataSource, UITableViewDelegate, 
         
         cell.update(data!)
         
-        cell.delegate = self as LatestCellDelegator
-        cell.customCelldelegate = self as CustomCellUpdater
-        cell.collieDelegate = self as CollieGalleryDelegate
+        cell.delegate = self
+        cell.customCelldelegate = self
+        cell.collieDelegate = self
         
         return cell
     }

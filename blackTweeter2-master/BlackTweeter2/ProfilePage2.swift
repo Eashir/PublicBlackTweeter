@@ -50,13 +50,15 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
     @IBOutlet weak var logoImageView: UIImageView!
     @IBOutlet weak var statusesCount: UILabel!
     @IBOutlet weak var fancySegmentedControl: SJFluidSegmentedControl!
+    
     var titleView = UILabel()
     
     @IBAction func followAction(_ sender: Any) {
         doFriendRequest()
     }
     
-    var profileCollieDelegate: CollieGalleryDelegate!
+    weak var profileCollieDelegate: CollieGalleryDelegate!
+    
     var OneExpandedProfPic = [CollieGalleryPicture]()
     var username: String?
     let maxHeaderHeight: CGFloat = 160;
@@ -66,16 +68,15 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
     
     let calendar = Calendar.current
     let currentDateTime = Date()
+    
     var enteredThePage = false
     var enteredTimeline = false
     var enteredMentions = false
-    private var  enteredLikes = false
+    var enteredLikes = false
     
     
     var userId: String?//for dumb__username: 24218899
-    let TWITTER_CONSUMER_KEY = UserDefaults.standard.object(forKey: "twitterConsumerKey")
-    let TWITTER_CONSUMER_SECRET_KEY = UserDefaults.standard.object(forKey: "twitterConsumerSecretKey")
-    let CALLBACK_URL = "http://www.google.com"
+
     private var tokenDictionary = Locksmith.loadDataForUserAccount(userAccount: "BlackTweeter")
     var swifter: Swifter?
     
@@ -84,13 +85,11 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
     //var tweetsJsonArray : [JSON] = []
     var changeableTweetsArray: [LatestStatus] = []
     
-    // let storyboard = UIStoryboard(name: "Main", bundle: nil)
     private let vw = UIView()
     private var twitterWebview : UIWebView?
     private var blurEffectView: UIVisualEffectView?
     private var backgroundIsBlurred = false
     var currentTime = TimeInterval()
-    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -107,10 +106,10 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
         profileTableView.dataSource = self
         profileTableView?.register(UINib(nibName: "FreeCell", bundle: nil), forCellReuseIdentifier: "FreeCell")
         
-        profileCollieDelegate =  self as CollieGalleryDelegate
+        profileCollieDelegate = self
         setUpMenuButton()
         
-        self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String, consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
+        self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
         
         let failureHandler: (Error) -> Void = { error in
             print("Yeaaa...so theres a problem with you network 😕. ", self.username)
@@ -119,23 +118,21 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
         
         let viewDidLoadDispatch = DispatchGroup()
         
-        for i in 0 ..< 1 {
-            viewDidLoadDispatch.enter()
+        viewDidLoadDispatch.enter()
+        
+        if (username == nil ){
+            swifter?.showUser(UserTag.id(userId!), includeEntities: true, success: { json in
+                self.hydrateProfView(json: json)
+                viewDidLoadDispatch.leave()
+            }, failure: failureHandler)
             
-            if (username == nil ){
-                swifter?.showUser(UserTag.id(userId!), includeEntities: true, success: { json in
-                    self.hydrateProfView(json: json)
-                    viewDidLoadDispatch.leave()
-                }, failure: failureHandler)
+        }else {
+            swifter?.showUser(UserTag.screenName(username!), includeEntities: true, success: { json in
+                //  print("json.array ", json)
                 
-            }else {
-                swifter?.showUser(UserTag.screenName(username!), includeEntities: true, success: { json in
-                    //  print("json.array ", json)
-                    
-                    self.hydrateProfView(json: json)
-                    viewDidLoadDispatch.leave()
-                }, failure: failureHandler)
-            }
+                self.hydrateProfView(json: json)
+                viewDidLoadDispatch.leave()
+            }, failure: failureHandler)
         }
         
         viewDidLoadDispatch.notify(queue: .main) {
@@ -215,12 +212,6 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
     private func firstTimeViewDidLoad () {
         //if there the token/secret is incorrect this will cause an error and not allow the user to log in. fix this. access token and oathtoken are the same thing fyi
         if (tokenDictionary != nil){
-            //            print("timeline dic accesstokenKey:\(tokenDictionary!["accessTokenKey"] as! String)")
-            //            print("timeline dic accesstokenSecret:\(tokenDictionary!["accessTokenSecret"] as! String)")
-            
-            
-            self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY as! String , consumerSecret: TWITTER_CONSUMER_SECRET_KEY as! String, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
-            
             if (self.swifter == nil) {
                 print("the account is nil!")
             }else{
@@ -228,6 +219,7 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
                 //the parameter is the default timeline when you enter the page for the first time
                 beginAbstractFetch(timelineType: TimelineEnum.timeline.stringValue!)
             }
+            
         }else {
             // toggleDrawer()
         }
@@ -246,45 +238,41 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
         
         let abstractDispatch = DispatchGroup()
         
-        for i in 0 ..< 1 {
-            abstractDispatch.enter()
-            self.displayLoadingGIF()
-            if (timelineType == TimelineEnum.mentions.stringValue) {
-                //                    if (!enteredTimeline){
-                //                        enteredTimeline = true
-                
-                self.swifter?.searchTweet(using: username!, geocode: nil, lang: nil, locale: nil, resultType: nil, count: 50, until: nil, sinceID: nil, maxID: nil, includeEntities: true, callback: "", tweetMode: TweetMode.extended, success: {(mentionsSearchJson: JSON, uselessMeta: JSON?) in
-                    self.fancySegmentedControl.alpha = 1.0
-                    self.functionJson = [:]
-                    self.functionJson = mentionsSearchJson
-                    
-                    
-                    abstractDispatch.leave()
-                }, failure: failureHandler)
-                
-            }else if (timelineType == TimelineEnum.timeline.stringValue) {
-                self.swifter?.getTimeline(for: userId!, count: 60, sinceID: nil, maxID: nil, trimUser: false, contributorDetails: true, includeEntities: true, tweetMode: TweetMode.extended, success: { json in
-                    self.fancySegmentedControl.alpha = 1.0
-                    self.functionJson = [:]
-                    self.functionJson = json
-                    abstractDispatch.leave()
-                }, failure: failureHandler)
-                
-            }else if (timelineType == TimelineEnum.likes.stringValue){
-                self.swifter?.getRecentlyFavoritedTweets(for: UserTag.id(userId!), count: 20, sinceID: nil, maxID: nil, tweetMode: TweetMode.extended, success:{ json in
-                    self.fancySegmentedControl.alpha = 1.0
-                    self.functionJson = [:]
-                    self.functionJson = json
-                    abstractDispatch.leave()
-                }, failure: failureHandler)
-            }
+        abstractDispatch.enter()
+        self.displayLoadingGIF()
+        if (timelineType == TimelineEnum.mentions.stringValue) {
             
+            self.swifter?.searchTweet(using: username!, geocode: nil, lang: nil, locale: nil, resultType: nil, count: 50, until: nil, sinceID: nil, maxID: nil, includeEntities: true, callback: "", tweetMode: TweetMode.extended, success: {(mentionsSearchJson: JSON, uselessMeta: JSON?) in
+                self.fancySegmentedControl.alpha = 1.0
+                self.functionJson = [:]
+                self.functionJson = mentionsSearchJson
+                
+                abstractDispatch.leave()
+            }, failure: failureHandler)
+            
+        }else if (timelineType == TimelineEnum.timeline.stringValue) {
+            self.swifter?.getTimeline(for: userId!, count: 60, sinceID: nil, maxID: nil, trimUser: false, contributorDetails: true, includeEntities: true, tweetMode: TweetMode.extended, success: { json in
+                self.fancySegmentedControl.alpha = 1.0
+                self.functionJson = [:]
+                self.functionJson = json
+                
+                abstractDispatch.leave()
+            }, failure: failureHandler)
+            
+        }else if (timelineType == TimelineEnum.likes.stringValue){
+            self.swifter?.getRecentlyFavoritedTweets(for: UserTag.id(userId!), count: 20, sinceID: nil, maxID: nil, tweetMode: TweetMode.extended, success:{ json in
+                self.fancySegmentedControl.alpha = 1.0
+                self.functionJson = [:]
+                self.functionJson = json
+                
+                abstractDispatch.leave()
+            }, failure: failureHandler)
         }
         
         
         abstractDispatch.notify(queue: .main) {
             if (self.functionJson.array?.count != nil && (self.functionJson.array?.count as! Int) > 0){
-                print("fetch: ", self.functionJson.array?.count as! Int)
+                
                 self.fetchTimelineFunction()
             }else{
                 self.changeableTweetsArray.removeAll()
@@ -310,7 +298,7 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
     func fetchTimelineFunction() {
         
         changeableTweetsArray = []
-        guard var tweets = self.functionJson.array else { return }
+        guard let tweets = self.functionJson.array else { return }
         // print("abstract: ", tweets)
         
         for var tweet in tweets {
@@ -584,8 +572,6 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
             ultraDefUrl.append(".jpg")
             let picture = CollieGalleryPicture(url: ultraDefUrl)
             OneExpandedProfPic.append(picture)
-            
-            
         }
         
         if let backgroundImageUrl = json["profile_banner_url"].string {
@@ -625,7 +611,7 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
         options.parallaxFactor = 0.8
         options.maximumZoomScale = 2.5
         // options.gapBetweenPages = 20
-        var gallery = CollieGallery(pictures: OneExpandedProfPic, options: options)
+        let gallery = CollieGallery(pictures: OneExpandedProfPic, options: options)
         if (profileCollieDelegate != nil){
             profileCollieDelegate?.gallery!(gallery, indexChangedTo: 0)
         }
@@ -977,7 +963,7 @@ extension ProfilePage2: UITableViewDataSource, UITableViewDelegate {
         cell.cellLatestTweet.dataDetectorTypes = UIDataDetectorTypes.link
         cell.cellLatestTweet.linkTextAttributes = [NSAttributedStringKey.foregroundColor.rawValue: AppConstants.tweeterDarkGreen]
         cell.delegate = self
-        cell.collieDelegate = self as CollieGalleryDelegate
+        cell.collieDelegate = self
         
         cell.update(data)
         return cell

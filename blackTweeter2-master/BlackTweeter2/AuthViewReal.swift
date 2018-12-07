@@ -14,20 +14,14 @@ import CollieGallery
 //solution? https://github.com/mattdonnelly/Swifter/issues/71
 class AuthViewReal: UIViewController, SFSafariViewControllerDelegate, LatestCellDelegator {
     
+    public static var controllerOpenedFrom: UIViewController?
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
-    static let TWITTER_CONSUMER_KEY = "UtRNXcs08szsUw7kSJOso9aWY9420"//GET_YOUR_OWN_KEY
-    static let TWITTER_CONSUMER_SECRET_KEY = "HvNG0OzkAGKB9420XZxxLXIp0vqCfhinHMytYukMmUy89YjmyaXrhP"//GET_YOUR_OWN_KEY
-    let CALLBACK_URL = "http://www.google.com"
+    
     var tokenDictionary: [String : Any]?
     var myString: String?
     var cameFromSafari = false
     var mUserId: String?
-    var OneExpandedProfPic = [CollieGalleryPicture]()
-    public static var controllerOpenedFrom: UIViewController?
-    let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RealProfilePage") as! ProfilePage2
-    
-    
     
     var swifter: Swifter
     
@@ -65,7 +59,7 @@ class AuthViewReal: UIViewController, SFSafariViewControllerDelegate, LatestCell
     }
     
     required init?(coder aDecoder: NSCoder) {
-        self.swifter = Swifter(consumerKey: "UtRNXcs08szsUw7kSJOso9aWY9420", consumerSecret: "HvNG0OzkAGKB9420XZxxLXIp0vqCfhinHMytYukMmUy89YjmyaXrhP")//GET_YOUR_OWN_KEY
+        self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY)
         super.init(coder: aDecoder)
     }
     
@@ -196,7 +190,7 @@ class AuthViewReal: UIViewController, SFSafariViewControllerDelegate, LatestCell
     
     func goToProfilePage(userID dataobjectUID: String, profileImage dataProfileImage: UIImageView) {
         
-        // let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RealProfilePage") as! ProfilePage2
+        let profileVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "RealProfilePage") as! ProfilePage2
         profileVC.userId = dataobjectUID
         
         appDelegate.drawerContainer?.toggle(MMDrawerSide.left, animated: true, completion: nil)

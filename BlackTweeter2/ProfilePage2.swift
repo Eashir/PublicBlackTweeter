@@ -13,7 +13,9 @@ import SDWebImage
 import SJFluidSegmentedControl
 import CollieGallery
 //https://michiganlabs.com/ios/development/2016/05/31/ios-animating-uitableview-header/
-class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate, UIGestureRecognizerDelegate, SJFluidSegmentedControlDataSource, SJFluidSegmentedControlDelegate, CollieGalleryDelegate, CustomCellUpdater, LatestCellDelegator {
+class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate, UIGestureRecognizerDelegate, SJFluidSegmentedControlDataSource, SJFluidSegmentedControlDelegate, CollieGalleryDelegate, CustomCellUpdater, LatestCellDelegator, EraseCellDelegate {
+
+    
     
     
     enum TimelineEnum {
@@ -805,6 +807,17 @@ class ProfilePage2: BaseViewController, UIScrollViewDelegate,  UIWebViewDelegate
     func updateTableView() {
         profileTableView?.reloadData()
         print("reloading tableview inside of Reusable tableview")
+    }
+    
+    func blockButtonTapped(cell: LatestCell) {
+        guard let indexPath = self.profileTableView?.indexPath(for: cell) else {
+            // Note, this shouldn't happen - how did the user tap on a button that wasn't on screen?
+            print("should not be happening")
+            return
+        }
+        print("Button tapped on row \(indexPath.row)")
+        self.changeableTweetsArray.remove(at: indexPath.row)
+        self.profileTableView?.deleteRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
     }
 }
 

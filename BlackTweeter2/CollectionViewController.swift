@@ -95,7 +95,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
         self.startTimer()
         setUpMenuButton()
         initNavigationItemTitleView()
-        NotificationCenter.default.addObserver(self, selector: #selector(CollectionViewController.objcPureReload), name: NSNotification.Name(rawValue: "collectionReload"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(CollectionViewController.objcPureReload), name: NSNotification.Name(rawValue: "collectionReload"), object: nil)
     }
     
     override func viewDidDisappear(_ animated: Bool) {

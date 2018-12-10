@@ -123,7 +123,7 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
         brainsForViewDidLoad()
         setUpMenuButton()
         initNavigationItemTitleView()
-                NotificationCenter.default.addObserver(self, selector: #selector(TimelineViewController3.objcBrains), name: NSNotification.Name(rawValue: "timelineReload"), object: nil)
+        //NotificationCenter.default.addObserver(self, selector: #selector(TimelineViewController3.objcBrains), name: NSNotification.Name(rawValue: "timelineReload"), object: nil)
     }
     
     private func initNavigationItemTitleView() {

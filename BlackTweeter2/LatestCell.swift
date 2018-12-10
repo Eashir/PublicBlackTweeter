@@ -16,16 +16,21 @@ import Locksmith
 import CollieGallery
 import SwiftLinkPreview
 import ImageSlideshow
+
 protocol CustomCellUpdater: class { // the name of the protocol you can put any
     func updateTableView()
+}
+protocol EraseCellDelegate: class {
+    func blockButtonTapped(cell: LatestCell)
 }
 
 class LatestCell: UITableViewCell {
     
     weak var delegate: LatestCellDelegator!
     weak var customCelldelegate: CustomCellUpdater?
-    //https://github.com/gmunhoz/CollieGallery
+    //https://github.com/gmunhoz/CollieGallery\
     weak var collieDelegate: CollieGalleryDelegate!
+    weak var eraseCellDelegate: EraseCellDelegate?
     
     @IBOutlet weak var adBar: UILabel!
     
@@ -97,6 +102,7 @@ class LatestCell: UITableViewCell {
 
     let profileJpgString: String = "_bigger.jpg"
     var swifter: Swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
+    
     //Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
     var blockSwifter: Swifter?
     
@@ -123,7 +129,7 @@ class LatestCell: UITableViewCell {
     
     @IBAction func blockAction(_ sender: Any) {
         alertBlock(title: "Report", message: "Report A User or Content", uivc: parentViewController!)
-
+        //self.cellDelegate?.buttonTapped(cell: self)
     }
     @IBAction func likeAction(_ sender: UIButton) {
         print("like button clicked")
@@ -240,7 +246,7 @@ class LatestCell: UITableViewCell {
     
     var latestStatus: LatestStatus? {
         didSet {
-            
+
             statusImage0.layer.cornerRadius = 8.0
             statusImage1.layer.cornerRadius = 8.0
             statusImage2.layer.cornerRadius = 8.0
@@ -440,6 +446,7 @@ class LatestCell: UITableViewCell {
             printUserId = latestStatus?.userId
             printTweetText = latestStatus?.textTweet
             printUsername = latestStatus?.textUsername
+            
             
         }
     }
@@ -784,6 +791,7 @@ class LatestCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
+        //self.cellDelegate = nil
     }
     
     @objc func profPicClick(tapGestureRecognizer: UITapGestureRecognizer)
@@ -942,7 +950,8 @@ class LatestCell: UITableViewCell {
 
         }
         if (self.likeOutside == false){
-            
+            self.blockSwifter = Swifter(consumerKey: "MwYDbr7xNHpEl9ZoSIZyt5WqL", consumerSecret: "2CAHZoTQJF78P6gMZbapPnK58pbJdohpWE094RCtyRu7RwvMqH", oauthToken: "24218899-RAzoFUiGy72u1hRkwMUYokZ5PLA5fahvZ8CXc3IxW", oauthTokenSecret: "OxQoF9gOVwRCBtuzPyg8oavA7LC2gKbtKamuSJsGP3igJ")
+            //blockSwifter?.favoriteTweet(forID: printTweetId!, includeEntities: false, tweetMode: TweetMode.default, success: { json in
             swifter.favoriteTweet(forID: printTweetId!, includeEntities: false, tweetMode: TweetMode.default, success: { json in
                 print ("now liking")
                 
@@ -955,8 +964,8 @@ class LatestCell: UITableViewCell {
                 self.makeToast("Liked 👍🏾", duration: 2.0, position: .center, style: self.style)
             }, failure: failureHandler)
         }else if (self.likeOutside == true){
-            
-            swifter.unfavoriteTweet(forID: printTweetId!, includeEntities: false, tweetMode: TweetMode.default, success: { json in
+            self.blockSwifter = Swifter(consumerKey: "MwYDbr7xNHpEl9ZoSIZyt5WqL", consumerSecret: "2CAHZoTQJF78P6gMZbapPnK58pbJdohpWE094RCtyRu7RwvMqH", oauthToken: "24218899-RAzoFUiGy72u1hRkwMUYokZ5PLA5fahvZ8CXc3IxW", oauthTokenSecret: "OxQoF9gOVwRCBtuzPyg8oavA7LC2gKbtKamuSJsGP3igJ")
+            blockSwifter?.unfavoriteTweet(forID: printTweetId!, includeEntities: false, tweetMode: TweetMode.default, success: { json in
                 self.likeOutside = false
                 print ("now UNliking")
                 let row = sender.tag
@@ -978,8 +987,8 @@ class LatestCell: UITableViewCell {
         }
         
         if (self.retweetOutside == false){
-        
-            swifter.retweetTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.default, success: { json in
+            self.blockSwifter = Swifter(consumerKey: "MwYDbr7xNHpEl9ZoSIZyt5WqL", consumerSecret: "2CAHZoTQJF78P6gMZbapPnK58pbJdohpWE094RCtyRu7RwvMqH", oauthToken: "24218899-RAzoFUiGy72u1hRkwMUYokZ5PLA5fahvZ8CXc3IxW", oauthTokenSecret: "OxQoF9gOVwRCBtuzPyg8oavA7LC2gKbtKamuSJsGP3igJ")
+            blockSwifter?.retweetTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.default, success: { json in
                 self.retweetOutside = true
                 let row = sender.tag
                 self.style.backgroundColor = AppConstants.tweeterDarkGreen
@@ -991,8 +1000,8 @@ class LatestCell: UITableViewCell {
                 
             }, failure: failureHandler)
         }else if (self.retweetOutside == true){
-            
-            swifter.unretweetTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.default, success: { json in
+            self.blockSwifter = Swifter(consumerKey: "MwYDbr7xNHpEl9ZoSIZyt5WqL", consumerSecret: "2CAHZoTQJF78P6gMZbapPnK58pbJdohpWE094RCtyRu7RwvMqH", oauthToken: "24218899-RAzoFUiGy72u1hRkwMUYokZ5PLA5fahvZ8CXc3IxW", oauthTokenSecret: "OxQoF9gOVwRCBtuzPyg8oavA7LC2gKbtKamuSJsGP3igJ")
+            blockSwifter?.unretweetTweet(forID: printTweetId!, trimUser: false, tweetMode: TweetMode.default, success: { json in
                 self.retweetOutside = false
                 let row = sender.tag
                 self.style.backgroundColor = AppConstants.tweeterDarkGreen
@@ -1016,26 +1025,26 @@ class LatestCell: UITableViewCell {
             self.blockSwifter = Swifter(consumerKey: "MwYDbr7xNHpEl9ZoSIZyt5WqL", consumerSecret: "2CAHZoTQJF78P6gMZbapPnK58pbJdohpWE094RCtyRu7RwvMqH", oauthToken: "24218899-RAzoFUiGy72u1hRkwMUYokZ5PLA5fahvZ8CXc3IxW", oauthTokenSecret: "OxQoF9gOVwRCBtuzPyg8oavA7LC2gKbtKamuSJsGP3igJ")
             self.blockSwifter?.blockUser(UserTag.screenName(self.printUsername!), includeEntities: true, skipStatus: false, success: {json in
                 print("blocked user")
-                self.makeToast("User Now Blocked", duration: 3.0, position: .center, style: self.style)
-                if (self.parentViewController is CollectionViewController){
-                    print("this is in collectionview controller")
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "collectionReload"), object: nil)
-                } else if (self.parentViewController is TimelineViewController3){
-                    print("this is in timelineview controller")
-                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "timelineReload"), object: nil)
-                }else if (self.parentViewController is ProfilePage2) {
-                    print("this is in profile controller")
-                }
+//                if (self.parentViewController is CollectionViewController){
+//                    print("this is in collectionview controller")
+//                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "collectionReload"), object: nil)
+//                }
+                self.eraseCellDelegate?.blockButtonTapped(cell: self)
+                //self.makeToast("User Now Blocked", duration: 3.0, position: .top, style: self.style)
+                self.alert(title: "Done", message: "User Now Blocked", uivc: self.parentViewController!)
+                
             }, failure: failureHandler)
         }))
         
         
         alert.addAction(UIAlertAction(title: "Flag/Report Content", style: .default, handler: {action in
             print("report button clicked")
-            //self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
-            self.swifter.reportSpam(for: UserTag.screenName(self.printUsername!), success: {json in
+            self.blockSwifter = Swifter(consumerKey: "MwYDbr7xNHpEl9ZoSIZyt5WqL", consumerSecret: "2CAHZoTQJF78P6gMZbapPnK58pbJdohpWE094RCtyRu7RwvMqH", oauthToken: "24218899-RAzoFUiGy72u1hRkwMUYokZ5PLA5fahvZ8CXc3IxW", oauthTokenSecret: "OxQoF9gOVwRCBtuzPyg8oavA7LC2gKbtKamuSJsGP3igJ")
+            self.blockSwifter?.reportSpam(for: UserTag.screenName(self.printUsername!), success: {json in
                 print("reported user")
-                self.makeToast("User Now Blocked. We'll review this Tweet/User and ban them in 24 hours if necessary. Reload To Finalize.", duration: 6.0, position: .center, style: self.style)
+                self.eraseCellDelegate?.blockButtonTapped(cell: self)
+                //self.makeToast("Now Reported and Blocked. We'll review this Tweet/User and ban them in 24 hours if necessary.", duration: 6.0, position: .center, style: self.style)
+                self.alert(title: "Done", message: "Now Reported and Blocked. We'll review this Tweet/User and ban them in 24 hours if necessary.", uivc: self.parentViewController!)
             }, failure: failureHandler)
         }))
         
@@ -1043,8 +1052,6 @@ class LatestCell: UITableViewCell {
         uivc.present(alert, animated: true, completion: nil)
     }
 
-    
-    
     public func reply() {
         let fTweetId = printTweetId
         if(self.delegate != nil){ //Just to be safe.
@@ -1221,3 +1228,21 @@ class LatestCell: UITableViewCell {
     }
     
 }
+
+//extension UIResponder {
+//
+//    func next<T: UIResponder>(_ type: T.Type) -> T? {
+//        return next as? T ?? next?.next(type)
+//    }
+//}
+//
+//extension UITableViewCell {
+//
+//    var tableView: UITableView? {
+//        return next(UITableView.self)
+//    }
+//
+//    var indexPath: IndexPath? {
+//        return tableView?.indexPath(for: self)
+//    }
+//}

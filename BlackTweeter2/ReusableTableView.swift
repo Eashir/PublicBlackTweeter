@@ -12,9 +12,12 @@ import Kingfisher
 import CollieGallery
 
 
-class ReusableTableView:  NSObject, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate, LatestCellDelegator, CustomCellUpdater, CollieGalleryDelegate, UIGestureRecognizerDelegate
-    
+class ReusableTableView:  NSObject, UITableViewDataSource, UITableViewDelegate, UIWebViewDelegate, LatestCellDelegator, CustomCellUpdater, CollieGalleryDelegate, UIGestureRecognizerDelegate, EraseCellDelegate
 {
+
+    
+
+    
     public static var profTableviewScrolled: Bool = false
     public static var backgroundIsBlurred = false
     
@@ -95,6 +98,7 @@ class ReusableTableView:  NSObject, UITableViewDataSource, UITableViewDelegate, 
         cell.delegate = self
         cell.customCelldelegate = self
         cell.collieDelegate = self
+        cell.eraseCellDelegate = self
         
         return cell
     }
@@ -118,6 +122,18 @@ class ReusableTableView:  NSObject, UITableViewDataSource, UITableViewDelegate, 
             cell.layer.transform = CATransform3DIdentity
         })
     }
+    
+     func blockButtonTapped(cell: LatestCell) {
+        guard let indexPath = self.tableView?.indexPath(for: cell) else {
+            // Note, this shouldn't happen - how did the user tap on a button that wasn't on screen?
+            print("should not be happening")
+            return
+        }
+        print("Button tapped on row \(indexPath.row)")
+        self.tableViewData?.remove(at: indexPath.row)
+        self.tableView?.deleteRows(at: [IndexPath(row: indexPath.row, section: 0)], with: .automatic)
+    }
+    
     
     func linkCallBack (string:String, wordType:wordType, tweetId:String){
         print("received string: ", string)

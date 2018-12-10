@@ -215,7 +215,7 @@ class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePicker
             if (text.count < 1) {
                 alert(title: "Are you serious rn?", message: "Yea, so Imma need you to put some valid text in the tweet. Thanks.")
             }else if (text.count > 280) {
-                alert(title: "Naw", message: "Thant's wayyy too many characters, shorten that for me Slim.")
+                alert(title: "Naw", message: "That's wayyy too many characters, shorten that for me Slim.")
             }
             tweetText = text
         }else{
@@ -236,7 +236,7 @@ class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePicker
                 print(json)
                 self.tweetTextView.text = ""
                 self.numberOfChar.text = "280"
-                self.alert(title: "Tweet sent", message: "👍🏾")
+                self.goodAlert(title: "Tweet sent", message: "👍🏾")
             }, failure: failureHandler)
         }else{
             let picForTwitterApi = tweetMedia![UIImagePickerControllerOriginalImage] as! UIImage
@@ -274,6 +274,19 @@ class WriteViewController: BaseViewController, UITextViewDelegate, UIImagePicker
     
     //how to dismiss after tweet is sent https://stackoverflow.com/questions/35807334/how-to-dismiss-a-uiviewcontroller-from-a-uialertcontrollers-uialertaction-handl
     func alert(title: String, message: String) {
+        
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Aight", style: .default, handler: nil))
+        //            { action in
+        //            self.dismiss(animated: true, completion: nil)
+        //            self.navigationController?.popViewController(animated: true)
+        //        }))
+        self.present(alert, animated: true, completion: nil)
+    }
+    
+    //how to dismiss after tweet is sent https://stackoverflow.com/questions/35807334/how-to-dismiss-a-uiviewcontroller-from-a-uialertcontrollers-uialertaction-handl
+    
+    func goodAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Aight", style: .default, handler:{ action in
             self.dismiss(animated: true, completion: nil)

@@ -98,6 +98,7 @@ class LatestCell: UITableViewCell {
     let profileJpgString: String = "_bigger.jpg"
     var swifter: Swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
     //Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: tokenDictionary!["accessTokenKey"] as! String, oauthTokenSecret: tokenDictionary!["accessTokenSecret"] as! String)
+    var blockSwifter: Swifter?
     
     var likeOutside: Bool?
     var retweetOutside: Bool?
@@ -120,6 +121,10 @@ class LatestCell: UITableViewCell {
     private var result = SwiftLinkPreview.Response()
     
     
+    @IBAction func blockAction(_ sender: Any) {
+        alertBlock(title: "Report", message: "Report A User or Content", uivc: parentViewController!)
+
+    }
     @IBAction func likeAction(_ sender: UIButton) {
         print("like button clicked")
         like(sender: sender)
@@ -164,6 +169,8 @@ class LatestCell: UITableViewCell {
         getGifButton?.layer.cornerRadius = 10
         getGifButton?.layer.borderWidth = 1
         getGifButton?.layer.borderColor = AppConstants.tweeterBrown.cgColor
+        self.style.backgroundColor = AppConstants.tweeterDarkGreen
+
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(profPicClick(tapGestureRecognizer:)))
         
@@ -234,12 +241,28 @@ class LatestCell: UITableViewCell {
     var latestStatus: LatestStatus? {
         didSet {
             
+            statusImage0.layer.cornerRadius = 8.0
+            statusImage1.layer.cornerRadius = 8.0
+            statusImage2.layer.cornerRadius = 8.0
+            statusImage3.layer.cornerRadius = 8.0
+            RTstatusImage0.layer.cornerRadius = 8.0
+            RTstatusImage1.layer.cornerRadius = 8.0
+            RTstatusImage2.layer.cornerRadius = 8.0
+            RTstatusImage3.layer.cornerRadius = 8.0
+            videoPlayerSuperview.layer.cornerRadius = 8.0
+            RTVideoSuperView.layer.cornerRadius = 8.0
+            videoPlayerSuperview.clipsToBounds = true
+            RTVideoSuperView.clipsToBounds = true
+            
+            self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
+
             //self.getGifButton?.isHidden = false
             RetweetedByLabel.isHidden = true
             RTStackView.isHidden = false
             self.adBar.isHidden = true // has to be set as hidden for every single cell individually
             videoPlayerSuperview.isHidden = true
             RTVideoSuperView.isHidden = true
+            style.backgroundColor = AppConstants.tweeterDarkGreen
 
             slideshow?.isHidden = true
             regularUrlDescStack.isHidden = true
@@ -283,6 +306,10 @@ class LatestCell: UITableViewCell {
                     myId = tokenDictionary!["realUserId"] as? String
                 }
             } else {
+                if (parentViewController == nil){
+                    alert(title: "Ummmmm", message: "...mmmm There was a problem getting the timeline so far" , uivc: parentViewController!)
+                }
+
                 alert(title: "Ummmmm", message: "Go head and Log in for me" , uivc: parentViewController!)
             }
             
@@ -911,7 +938,8 @@ class LatestCell: UITableViewCell {
     func like(sender: UIButton) {
         let failureHandler: (Error) -> Void = { error in
             print("Was unable to like 😕 because: \(error.localizedDescription)")
-            self.makeToast("Liked 👍🏾", duration: 2.0, position: .center, style: self.style)
+            self.makeToast("Was unable to like 😕 because: \(error.localizedDescription)", duration: 2.0, position: .center, style: self.style)
+
         }
         if (self.likeOutside == false){
             
@@ -946,6 +974,7 @@ class LatestCell: UITableViewCell {
     func retweet(sender: UIButton) {
         let failureHandler: (Error) -> Void = { error in
             print("Was unable to retweet 😕 because: \(error.localizedDescription)")
+            self.makeToast("Was unable to retweet 😕 because: \(error.localizedDescription)", duration: 2.0, position: .center, style: self.style)
         }
         
         if (self.retweetOutside == false){
@@ -974,6 +1003,46 @@ class LatestCell: UITableViewCell {
             }, failure: failureHandler)
         }
     }
+    
+    func alertBlock(title: String, message: String, uivc: UIViewController) {
+        let failureHandler: (Error) -> Void = { error in
+            print("Was unable to complete task because: \(error.localizedDescription)")
+            self.makeToast("Was unable to complete task now, try again later", duration: 2.0, position: .center, style: self.style)
+        }
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Block User", style: .default, handler: {action in
+            print("block button clicked")
+            self.blockSwifter = Swifter(consumerKey: "MwYDbr7xNHpEl9ZoSIZyt5WqL", consumerSecret: "2CAHZoTQJF78P6gMZbapPnK58pbJdohpWE094RCtyRu7RwvMqH", oauthToken: "24218899-RAzoFUiGy72u1hRkwMUYokZ5PLA5fahvZ8CXc3IxW", oauthTokenSecret: "OxQoF9gOVwRCBtuzPyg8oavA7LC2gKbtKamuSJsGP3igJ")
+            self.blockSwifter?.blockUser(UserTag.screenName(self.printUsername!), includeEntities: true, skipStatus: false, success: {json in
+                print("blocked user")
+                self.makeToast("User Now Blocked", duration: 3.0, position: .center, style: self.style)
+                if (self.parentViewController is CollectionViewController){
+                    print("this is in collectionview controller")
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "collectionReload"), object: nil)
+                } else if (self.parentViewController is TimelineViewController3){
+                    print("this is in timelineview controller")
+                    NotificationCenter.default.post(name: NSNotification.Name(rawValue: "timelineReload"), object: nil)
+                }else if (self.parentViewController is ProfilePage2) {
+                    print("this is in profile controller")
+                }
+            }, failure: failureHandler)
+        }))
+        
+        
+        alert.addAction(UIAlertAction(title: "Flag/Report Content", style: .default, handler: {action in
+            print("report button clicked")
+            //self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY, oauthToken: OAUTH_TOKEN, oauthTokenSecret: OAUTH_TOKEN_SECRET)
+            self.swifter.reportSpam(for: UserTag.screenName(self.printUsername!), success: {json in
+                print("reported user")
+                self.makeToast("User Now Blocked. We'll review this Tweet/User and ban them in 24 hours if necessary. Reload To Finalize.", duration: 6.0, position: .center, style: self.style)
+            }, failure: failureHandler)
+        }))
+        
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
+        uivc.present(alert, animated: true, completion: nil)
+    }
+
     
     
     public func reply() {

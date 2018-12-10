@@ -15,20 +15,23 @@ import AVFoundation
 import CollieGallery
 //import GoogleMobileAds
 
-class CollectionViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate {
+class CollectionViewController: BaseViewController, UICollectionViewDataSource, UICollectionViewDelegate, UIWebViewDelegate, UIGestureRecognizerDelegate, UITabBarControllerDelegate {
     
     // @IBOutlet weak var bannerView: GADBannerView!
     
     @IBOutlet weak var mainCollectionView: UICollectionView!
     
+    @IBOutlet weak var labelBackground: UIView!
     @IBOutlet weak var theTableview: UITableView!
     var reusableTableView: ReusableTableView!
+    var mainCount: Int = 0
     
     @IBOutlet weak var categoryLabel: UILabel!
     
     @IBOutlet weak var mMenuButton: UIBarButtonItem!
     var selectedCell = UICollectionViewCell()
     var statusesForThisCategory: [LatestStatus] = []
+    var inTheCollectionView = true
     
     var currentCategory = ""
     var firebaseDictionary = [String: FBCategory]()
@@ -37,7 +40,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
     var firstFirebaseCategory: String?
     var changingFirebaseCount: Int = 5
     
-    let infiniteCount = 100000
+    let infiniteCount = 6
     var timer: Timer?
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
@@ -57,7 +60,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
    
     private let reuseIdentifier = "collectionCell"
     var changeableTweetsArray: [LatestStatus]?
-    var allowedToReload = true
+    static var allowedToReload = true
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -65,6 +68,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
         self.navigationController?.navigationBar.tintAdjustmentMode = .automatic
         
         theTableview.isScrollEnabled = true
+        print("collection view visible")
     }
     
     override func viewDidLoad() {
@@ -74,6 +78,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
             self.displayLoadingGIF()
         }
         
+        self.tabBarController?.delegate = self as UITabBarControllerDelegate
         mainCollectionView.delegate = self
         mainCollectionView.dataSource = self
         //        let request = GADRequest ()
@@ -83,12 +88,18 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
         //        bannerView.rootViewController = self
         //        bannerView.load(request)
         
+        labelBackground.layer.cornerRadius = 16
         
         pureReload()
         
         self.startTimer()
         setUpMenuButton()
         initNavigationItemTitleView()
+        NotificationCenter.default.addObserver(self, selector: #selector(CollectionViewController.objcPureReload), name: NSNotification.Name(rawValue: "collectionReload"), object: nil)
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        print("leaving collection view")
     }
     
     private func initNavigationItemTitleView() {
@@ -105,18 +116,25 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
     }
     
     @objc private func titleWasTapped() {
-        scrollToFirstRow()
+        self.scrollToFirstRow()
     }
     
-    func pureReload (){
-        if (allowedToReload){
-            allowedToReload = false
+    @objc func objcPureReload () {
+        pureReload()
+    }
+    
+    
+    func pureReload() {
+        if (CollectionViewController.allowedToReload){
+            CollectionViewController.allowedToReload = false
+            
+
            // versionRef = Database.database().reference().child("Version")
             versionRef = Database.database().reference().child("VersionApple")
             versionRef.observe(.value, with: {(versionSnap) in
                 if (versionSnap.value == nil) {
                     print("no value!")
-                    self.allowedToReload = true
+                    CollectionViewController.allowedToReload = true
                 } else if (versionSnap.value as! Int == self.hardVersion){
                     self.ref = Database.database().reference().child("TheLatest")
                     self.ref.observe(.value, with: {(allCategoriesSnap) in
@@ -132,14 +150,14 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
                     })
                 } else {
                     self.alert(title: "Out of Date", message: "Aye go to the App Store and get the latest version for me")
-                    self.allowedToReload = true
+                    CollectionViewController.allowedToReload = true
                 }
             })
         }
     }
     
-    var count: Int = 0
-    var didScrollToTop = true
+
+
     
     //    @objc func tap() {
     //
@@ -270,6 +288,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
     }
     
     public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if(CollectionViewController.allowedToReload){
         var categoryArray = fBKeyStringArray
         let selectedCategory = categoryArray[indexPath.row % changingFirebaseCount]
         categoryLabel.text = selectedCategory
@@ -284,11 +303,12 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
         
         self.reusableTableView = ReusableTableView(theTableview, changeableTweetsArray!, self)
         self.reusableTableView.tableView?.reloadData()
-        scrollToFirstRow()
+        self.scrollToFirstRow()
         
         let cellForAlpha = self.mainCollectionView.cellForItem(at: indexPath)
         cellForAlpha?.alpha = 1
         //cellForAlpha?.backgroundView = bgColorView// this never deselects
+        }
     }
     
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
@@ -315,6 +335,21 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         self.centerIfNeeded()
     }
+    
+     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+        let tabBarIndex = tabBarController.selectedIndex
+        print(tabBarIndex)
+        print("this is where 0happens")
+        let indexPath = IndexPath(row: 0, section: 0)
+        theTableview.scrollToRow(at: indexPath, at: .top, animated: true)
+        
+//        if tabBarIndex == 0 {
+//            //self.theTableview.setContentOffset(CGPoint.zero, animated: true)
+//            self.scrollToFirstRow()
+//        }
+    }
+
     
     func centerIfNeeded() {
         let currentOffset = mainCollectionView.contentOffset
@@ -354,13 +389,21 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
     }
     
     func stopTimer() {
-        timer?.invalidate()
-        timer = nil
+        if (timer != nil){
+            timer?.invalidate()
+            timer = nil
+        }
     }
     
     @objc func rotate() {
-        let offset = CGPoint(x: mainCollectionView.contentOffset.x + cellWidth, y: mainCollectionView.contentOffset.y)
-        mainCollectionView.setContentOffset(offset, animated: true)
+        mainCount =  mainCount + 1
+        if (mainCount >= 3){
+            stopTimer()
+        } else {
+            let offset = CGPoint(x: mainCollectionView.contentOffset.x + cellWidth, y: mainCollectionView.contentOffset.y)
+            mainCollectionView.setContentOffset(offset, animated: true)
+        }
+
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -402,6 +445,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
             //this only happens when we have to load it up for th first time after login
             print("drawer was open AND token is nil now setting the data and reloading ")
             tokenDictionary = Locksmith.loadDataForUserAccount(userAccount: "BlackTweeter")
+            CollectionViewController.allowedToReload = true
             pureReload()
             return
         }
@@ -500,7 +544,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
                 } else {
                     self.alert(title: "Damn...", message: "Yeaaa...so theres a problem with you network 😕.")
                 }
-                self.allowedToReload = true
+                CollectionViewController.allowedToReload = true
                 self.dismissLoadingGIF()
             }
             
@@ -530,6 +574,12 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
                 print("number of gotten tweets \(tweets.count)")
                 
                 for var tweet in allCategoryTweetsJSONArray {
+                    
+                    if(tweet["possibly_sensitive"].bool == true && AppDelegate.objContentHasBeenBlocked!){
+                        print("this tweet is sensitive so we're leaving.")
+                        continue
+                    }
+
                     
                     var isARetweet: Bool = false
                     var isAQuote: Bool = false
@@ -810,7 +860,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
             self.theTableview.reloadData()
             self.scrollToFirstRow()
             self.dismissLoadingGIF()
-            self.allowedToReload = true
+            CollectionViewController.allowedToReload = true
         }
         
     }
@@ -838,7 +888,7 @@ class CollectionViewController: BaseViewController, UICollectionViewDataSource, 
         return profileImageUrl
     }
     
-    func scrollToFirstRow() {
+    private func scrollToFirstRow() {
         let indexPath = IndexPath(row: 0, section: 0)
         theTableview.scrollToRow(at: indexPath, at: .top, animated: true)
     }

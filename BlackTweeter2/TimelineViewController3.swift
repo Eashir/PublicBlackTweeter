@@ -16,7 +16,7 @@ import AVFoundation
 import CollieGallery
 //import GoogleMobileAds
 
-class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGestureRecognizerDelegate {
+class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGestureRecognizerDelegate, UITabBarControllerDelegate {
     
     // @IBOutlet weak var bannerView: GADBannerView!
     
@@ -27,6 +27,7 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
     //@IBOutlet weak var menuButton: UIBarButtonItem!
     
     var timer: Timer?
+    var inTimeline = true
     
     let appDelegate = UIApplication.shared.delegate as! AppDelegate
     //  var versionRef: DatabaseReference!
@@ -81,12 +82,30 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
         
     }
     
+     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        
+        let tabBarIndex = tabBarController.selectedIndex
+        print(tabBarIndex)
+        
+        if tabBarIndex == 1 {
+            if (inTimeline){
+            self.scrollToFirstRow()
+            }
+        }
+        inTimeline = true
+    }
+
+    
     
     override func viewWillAppear(_ animated: Bool) {
         //reset the blur scroll effect
         super.viewWillAppear(animated)
         
         thisTableview.isScrollEnabled = true
+    }
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        inTimeline = false
     }
     
     override func viewDidLoad() {
@@ -100,9 +119,11 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
         //        bannerView.rootViewController = self
         //        bannerView.load(request)
         
+        self.tabBarController?.delegate = self as UITabBarControllerDelegate
         brainsForViewDidLoad()
         setUpMenuButton()
         initNavigationItemTitleView()
+                NotificationCenter.default.addObserver(self, selector: #selector(TimelineViewController3.objcBrains), name: NSNotification.Name(rawValue: "timelineReload"), object: nil)
     }
     
     private func initNavigationItemTitleView() {
@@ -119,7 +140,11 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
     }
     
     @objc private func titleWasTapped() {
-        scrollToFirstRow()
+        self.scrollToFirstRow()
+    }
+    
+    @objc func objcBrains () {
+        self.brainsForViewDidLoad()
     }
     
     //this only happens when we have to load it up for th first time after login
@@ -180,6 +205,11 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
                                         
                                         for var tweet in self.tweetsArray {
                                             
+                                            if(tweet["possibly_sensitive"].bool == true && AppDelegate.objContentHasBeenBlocked!){
+                                                print("this tweet is sensitive so we're leaving.")
+                                                continue
+                                            }
+                                            
                                             var isARetweet: Bool = false
                                             var isAQuote: Bool = false
                                             var retweetedBy: String?
@@ -197,7 +227,6 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
                                             var profileImage = tweet["user"]["profile_image_url_https"].string
                                             profileImage =  self.getHighDefPic(lowDefProfileUrl: profileImage!)
                                             var text = tweet["full_text"].string
-                                           // text = ("RETWEET \(text!)")
                                             print ("retweetben ", text!)
                                             let username = tweet["user"]["screen_name"].string
                                             let fullname = tweet["user"]["name"].string
@@ -418,7 +447,7 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
         }
     }
     
-    func scrollToFirstRow() {
+    private func scrollToFirstRow() {
         let indexPath = IndexPath(row: 0, section: 0)
         self.thisTableview.scrollToRow(at: indexPath, at: .top, animated: true)
     }
@@ -432,7 +461,7 @@ class TimelineViewController3: BaseViewController,  UIWebViewDelegate, UIGesture
         print("was open: \(universalWasOpen)")
         if (universalWasOpen) {
             if (tokenDictionary != nil) {
-                clearOutAndRefresh()
+               // clearOutAndRefresh()
                 print("drawer WAS open and token is not nil")
             }
         }

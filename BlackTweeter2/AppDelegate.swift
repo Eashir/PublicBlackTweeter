@@ -17,11 +17,11 @@ import UserNotifications
 
 //how to autoarrange text CTRL + I
 
-let TWITTER_CONSUMER_KEY = "UtRNXcs08szsUw7kSJOso9aWY"
-let TWITTER_CONSUMER_SECRET_KEY = "HvNG0OzkAGKBXZxxLXIp0vqCfhinHMytYukMmUy89YjmyaXrhP"
+let TWITTER_CONSUMER_KEY = "MwYDbr7xNHpEl9ZoSIZyt5WqL"
+let TWITTER_CONSUMER_SECRET_KEY = "2CAHZoTQJF78P6gMZbapPnK58pbJdohpWE094RCtyRu7RwvMqH"
 
-let OAUTH_TOKEN = "928135071521017856-7w0pKnkd6Z3fsCkIjwpjZFlSzD1RkDL" //GET_YOUR_OWN_KEY
-let OAUTH_TOKEN_SECRET = "RUViQbwNK1o2IThlJe4LyK3AWo6mwIdGp7fJje5M9l9z6"//GET_YOUR_OWN_KEY
+let OAUTH_TOKEN = "24218899-RAzoFUiGy72u1hRkwMUYokZ5PLA5fahvZ8CXc3IxW" //GET_YOUR_OWN_KEY
+let OAUTH_TOKEN_SECRET = "OxQoF9gOVwRCBtuzPyg8oavA7LC2gKbtKamuSJsGP3igJ"//GET_YOUR_OWN_KEY
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate, MessagingDelegate  {
@@ -29,6 +29,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     var window: UIWindow?
     var drawerContainer : MMDrawerController?
     static var onBoardingCompleted: Bool?
+    static var eulaCompleted: Bool?
+    static var objContentHasBeenBlocked: Bool?
+
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         
@@ -36,11 +39,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UIApplication.shared.applicationIconBadgeNumber = 0
         
         let userDefaults = UserDefaults.standard
+        if userDefaults.bool(forKey: "eulaCompleted"){
+            AppDelegate.eulaCompleted = true
+        }else {
+            AppDelegate.eulaCompleted = false
+        }
+
         if userDefaults.bool(forKey: "onboardingComplete"){
             AppDelegate.onBoardingCompleted = true
         }else {
             AppDelegate.onBoardingCompleted = false
         }
+        
+        if userDefaults.bool(forKey: "blockObjContent"){
+            AppDelegate.objContentHasBeenBlocked = true
+        }else {
+            AppDelegate.objContentHasBeenBlocked = false
+        }
+
         
         buildNavigationDrawerInterface()
         FirebaseApp.configure()
@@ -116,11 +132,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let onBoardingPage = mainStoryBoard.instantiateViewController(withIdentifier: "OnBoardViewController") as! OnBoardMain
         let mainPage:TabBarController = mainStoryBoard.instantiateViewController(withIdentifier: "TabBarController") as! TabBarController
         let loginMenu:AuthViewReal = mainStoryBoard.instantiateViewController(withIdentifier: "AuthViewReal") as! AuthViewReal
+        let eulaPage = mainStoryBoard.instantiateViewController(withIdentifier: "EULAViewController") as! EULAViewController
+
         
-        if (AppDelegate.onBoardingCompleted)!{
+        if (AppDelegate.onBoardingCompleted)!{//this is for optional not for false bool
             drawerContainer = MMDrawerController(center: mainPage, leftDrawerViewController: loginMenu)
-        }else {
+        }else if(AppDelegate.eulaCompleted)!{
             drawerContainer = MMDrawerController(center: onBoardingPage, leftDrawerViewController: loginMenu)
+        }else {
+            drawerContainer = MMDrawerController(center: eulaPage, leftDrawerViewController:loginMenu)
         }
         window?.rootViewController = drawerContainer
     }

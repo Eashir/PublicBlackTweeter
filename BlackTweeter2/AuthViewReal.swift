@@ -28,6 +28,8 @@ class AuthViewReal: UIViewController, SFSafariViewControllerDelegate, LatestCell
     @IBOutlet weak var loginButton: TWTButton!
     @IBOutlet weak var logoutButton: TWTButton!
     
+    @IBOutlet weak var objButton: TWTButton!
+    
     
     @IBAction func deleteTokens(_ sender: Any) {
         print("touched log out")
@@ -58,6 +60,28 @@ class AuthViewReal: UIViewController, SFSafariViewControllerDelegate, LatestCell
         appDelegate.buildNavigationDrawerInterface()
     }
     
+    @IBAction func objAction(_ sender: Any) {
+        if(AppDelegate.objContentHasBeenBlocked == false){
+            
+            AppDelegate.objContentHasBeenBlocked = true
+            let btUserDefaults = UserDefaults.standard
+            btUserDefaults.set(AppDelegate.objContentHasBeenBlocked, forKey: "blockObjContent")
+            btUserDefaults.synchronize()
+            objButton.alpha = 0.3
+            alert(title: "Filtered Sensitive Content", message: "Sensitive and objectionable content has now been filtered from your Twitter feed", confirmation: "Gotcha")
+        } else {
+            AppDelegate.objContentHasBeenBlocked = false
+            let btUserDefaults = UserDefaults.standard
+            btUserDefaults.set(AppDelegate.objContentHasBeenBlocked, forKey: "blockObjContent")
+            btUserDefaults.synchronize()
+            objButton.alpha = 1.0
+            alert(title: "Removed Block", message: "All content is now visible in your Twitter feed", confirmation: "Gotcha")
+        }
+        print("obj content has been blocked?: ", AppDelegate.objContentHasBeenBlocked!)
+    }
+
+    
+    
     required init?(coder aDecoder: NSCoder) {
         self.swifter = Swifter(consumerKey: TWITTER_CONSUMER_KEY, consumerSecret: TWITTER_CONSUMER_SECRET_KEY)
         super.init(coder: aDecoder)
@@ -65,6 +89,12 @@ class AuthViewReal: UIViewController, SFSafariViewControllerDelegate, LatestCell
     
     override func viewDidLoad() {
         print("inside viewdidload")
+        if(AppDelegate.objContentHasBeenBlocked == false){//normal (all) content can be seen
+            objButton.alpha = 1.0
+        }else{
+            objButton.alpha = 0.3
+        }
+
         if (Locksmith.loadDataForUserAccount(userAccount: "BlackTweeter") != nil){
 //            print("token dictionary: \(String(describing: Locksmith.loadDataForUserAccount(userAccount: "BlackTweeter")!))")
             getProfilePic()
@@ -122,6 +152,8 @@ class AuthViewReal: UIViewController, SFSafariViewControllerDelegate, LatestCell
                 self.tokenDictionary = Locksmith.loadDataForUserAccount(userAccount: "BlackTweeter")
                 
                 self.alert(title: "Success!", message: "Click the menu icon at the top right and let's do this", confirmation: "Sounds Good")
+                CollectionViewController.allowedToReload = true
+
                 
                 self.loginButton.alpha = 0.3
                 self.logoutButton.alpha = 1.0

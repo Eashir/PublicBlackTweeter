@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L40-w8-fm9">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="L40-w8-fm9">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -462,7 +462,8 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="8zb-SI-2m3" customClass="TWTButton" customModule="BlackTweeter2" customModuleProvider="target">
-                                <rect key="frame" x="48" y="438" width="96" height="30"/>
+                                <rect key="frame" x="16" y="413" width="80" height="27"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <state key="normal" title=" Go To Profile ">
                                     <color key="titleColor" red="0.33656548600000002" green="0.22594173749999999" blue="0.1102077363" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -478,7 +479,7 @@
                                 </constraints>
                             </imageView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default_profile_" translatesAutoresizingMaskIntoConstraints="NO" id="ND0-Sg-280">
-                                <rect key="frame" x="16" y="270" width="160" height="160"/>
+                                <rect key="frame" x="16" y="245" width="160" height="160"/>
                                 <constraints>
                                     <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="160" id="Daa-HM-nPQ"/>
                                     <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="160" id="Eiv-5w-ax3"/>
@@ -493,11 +494,8 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1yT-5i-O1C" customClass="TWTButton" customModule="BlackTweeter2" customModuleProvider="target">
-                                <rect key="frame" x="45.5" y="484" width="101" height="30"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="101" id="ANc-rs-dNS"/>
-                                    <constraint firstAttribute="height" constant="30" id="mLp-BX-INv"/>
-                                </constraints>
+                                <rect key="frame" x="16" y="448" width="78" height="26"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                 <state key="normal" title=" Short Tutorial ">
                                     <color key="titleColor" red="0.24939853000000001" green="0.16310585599999999" blue="0.081510339249999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
@@ -506,34 +504,46 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="BlackTweeter will never edit tweets and &quot;What's Happening&quot; will never show private tweets" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x5w-Fp-mI6">
-                                <rect key="frame" x="16" y="530" width="175" height="74"/>
+                                <rect key="frame" x="16" y="490" width="175" height="74"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="175" id="kxQ-cf-2g2"/>
-                                    <constraint firstAttribute="height" constant="74" id="mfz-fr-1Gh"/>
+                                    <constraint firstAttribute="width" constant="175" id="5qQ-tN-yOe"/>
+                                    <constraint firstAttribute="height" constant="74" id="HbO-Cg-XHY"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" red="0.24939853000000001" green="0.16310585599999999" blue="0.081510339249999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Pi1-Zb-tEb" customClass="TWTButton" customModule="BlackTweeter2" customModuleProvider="target">
+                                <rect key="frame" x="102" y="448" width="150" height="26"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="11"/>
+                                <state key="normal" title=" Filter Objectionable Tweets ">
+                                    <color key="titleColor" red="0.24939853000000001" green="0.16310585599999999" blue="0.081510339249999994" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="objAction:" destination="bjk-7i-rj6" eventType="touchUpInside" id="URe-Uk-SMa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="1yT-5i-O1C" firstAttribute="top" secondItem="8zb-SI-2m3" secondAttribute="bottom" constant="8" id="1vL-rf-rgX"/>
                             <constraint firstItem="RL1-ra-Acp" firstAttribute="bottom" secondItem="8zd-Tg-VOR" secondAttribute="bottom" constant="35" id="2qC-Bb-9GC"/>
                             <constraint firstItem="IbJ-ti-Uwf" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="60" id="457-jg-yvM"/>
+                            <constraint firstItem="1yT-5i-O1C" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="16" id="6sA-b8-6DW"/>
                             <constraint firstItem="ND0-Sg-280" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="16" id="9c0-W6-6mz"/>
-                            <constraint firstItem="8zb-SI-2m3" firstAttribute="top" secondItem="ND0-Sg-280" secondAttribute="bottom" constant="8" id="Cte-BU-B3j"/>
-                            <constraint firstItem="x5w-Fp-mI6" firstAttribute="top" secondItem="1yT-5i-O1C" secondAttribute="bottom" constant="16" id="Lfj-lm-gvY"/>
-                            <constraint firstItem="8zb-SI-2m3" firstAttribute="centerX" secondItem="ND0-Sg-280" secondAttribute="centerX" id="Pxn-FR-0Im"/>
+                            <constraint firstItem="ND0-Sg-280" firstAttribute="top" secondItem="huY-VK-Mow" secondAttribute="bottom" constant="25" id="9gx-pY-Xn5"/>
+                            <constraint firstItem="x5w-Fp-mI6" firstAttribute="top" secondItem="1yT-5i-O1C" secondAttribute="bottom" constant="16" id="CmF-lL-yqB"/>
+                            <constraint firstItem="x5w-Fp-mI6" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="16" id="OQM-03-vbG"/>
+                            <constraint firstItem="8zb-SI-2m3" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="16" id="Qi1-ym-8iT"/>
                             <constraint firstItem="ND0-Sg-280" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="16" id="Qjf-2C-Mqo"/>
                             <constraint firstItem="8zd-Tg-VOR" firstAttribute="top" secondItem="yMx-FO-Iso" secondAttribute="bottom" constant="12" id="T8U-dG-k05"/>
-                            <constraint firstItem="1yT-5i-O1C" firstAttribute="centerX" secondItem="8zb-SI-2m3" secondAttribute="centerX" id="lOW-Kz-2NG"/>
+                            <constraint firstItem="Pi1-Zb-tEb" firstAttribute="top" secondItem="8zb-SI-2m3" secondAttribute="bottom" constant="8" id="Ufl-Iu-jo5"/>
+                            <constraint firstItem="8zb-SI-2m3" firstAttribute="top" secondItem="ND0-Sg-280" secondAttribute="bottom" constant="8" id="kXB-eS-aY0"/>
                             <constraint firstItem="yMx-FO-Iso" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="16" id="o6H-zD-Lcp"/>
                             <constraint firstItem="huY-VK-Mow" firstAttribute="top" secondItem="IbJ-ti-Uwf" secondAttribute="bottom" constant="8" id="oTe-Mj-v2g"/>
-                            <constraint firstItem="ND0-Sg-280" firstAttribute="top" secondItem="huY-VK-Mow" secondAttribute="bottom" constant="50" id="p9E-vb-9bO"/>
-                            <constraint firstItem="1yT-5i-O1C" firstAttribute="top" secondItem="8zb-SI-2m3" secondAttribute="bottom" constant="16" id="q7Y-9f-1X5"/>
-                            <constraint firstItem="x5w-Fp-mI6" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="16" id="tFv-DR-j5A"/>
                             <constraint firstItem="IbJ-ti-Uwf" firstAttribute="top" secondItem="RL1-ra-Acp" secondAttribute="top" constant="60" id="uDj-km-WKe"/>
                             <constraint firstItem="huY-VK-Mow" firstAttribute="centerX" secondItem="IbJ-ti-Uwf" secondAttribute="centerX" id="uK9-6H-thh"/>
+                            <constraint firstItem="Pi1-Zb-tEb" firstAttribute="leading" secondItem="1yT-5i-O1C" secondAttribute="trailing" constant="8" id="vu3-xz-gep"/>
                             <constraint firstItem="8zd-Tg-VOR" firstAttribute="leading" secondItem="RL1-ra-Acp" secondAttribute="leading" constant="16" id="wxp-K8-Pn6"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="RL1-ra-Acp"/>
@@ -544,6 +554,7 @@
                         <outlet property="loginButton" destination="yMx-FO-Iso" id="vHX-wz-So4"/>
                         <outlet property="logoutButton" destination="8zd-Tg-VOR" id="Szb-rZ-rcF"/>
                         <outlet property="menuProfilePic" destination="ND0-Sg-280" id="QCQ-HO-kDo"/>
+                        <outlet property="objButton" destination="Pi1-Zb-tEb" id="xaG-0D-UCy"/>
                         <segue destination="49e-Tb-3d3" kind="presentation" identifier="doStuff" id="3x1-ZC-QZQ"/>
                     </connections>
                 </viewController>
@@ -624,10 +635,10 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oNG-L1-IAk">
-                                                    <rect key="frame" x="4" y="10" width="115" height="154"/>
+                                                    <rect key="frame" x="4" y="10" width="115" height="154.5"/>
                                                 </imageView>
                                                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2kZ-Xa-Gea">
-                                                    <rect key="frame" x="4" y="126" width="115" height="38"/>
+                                                    <rect key="frame" x="4" y="126.5" width="115" height="38"/>
                                                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="jAh-2f-5E1">
                                                         <rect key="frame" x="0.0" y="0.0" width="115" height="38"/>
                                                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -673,10 +684,10 @@
                                 </connections>
                             </collectionView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SRD-79-sos">
-                                <rect key="frame" x="0.0" y="232" width="375" height="30"/>
+                                <rect key="frame" x="2" y="232" width="371" height="30"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="giG-tK-hHP">
-                                        <rect key="frame" x="168" y="6" width="39" height="19"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="Label" textAlignment="natural" lineBreakMode="middleTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="giG-tK-hHP">
+                                        <rect key="frame" x="168" y="6" width="39" height="18"/>
                                         <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="15"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
@@ -684,35 +695,38 @@
                                 </subviews>
                                 <color key="backgroundColor" red="0.58039215690000001" green="0.82745098039999998" blue="0.77647058820000003" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="30" id="Af0-vb-dzE"/>
-                                    <constraint firstAttribute="bottom" secondItem="giG-tK-hHP" secondAttribute="bottom" constant="5" id="HlO-yo-5AA"/>
-                                    <constraint firstItem="giG-tK-hHP" firstAttribute="centerX" secondItem="SRD-79-sos" secondAttribute="centerX" id="Tie-E9-2K6"/>
-                                    <constraint firstItem="giG-tK-hHP" firstAttribute="top" secondItem="SRD-79-sos" secondAttribute="top" constant="6" id="qpq-vD-Q18"/>
+                                    <constraint firstAttribute="height" constant="30" id="OvH-qE-W8W"/>
+                                    <constraint firstItem="giG-tK-hHP" firstAttribute="centerX" secondItem="SRD-79-sos" secondAttribute="centerX" id="SB3-tK-33S"/>
+                                    <constraint firstItem="giG-tK-hHP" firstAttribute="centerY" secondItem="SRD-79-sos" secondAttribute="centerY" id="uXK-KZ-aJ4"/>
                                 </constraints>
                             </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="LRJ-hm-2WK">
                                 <rect key="frame" x="0.0" y="270" width="375" height="348"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="348" id="nZD-gh-e7C"/>
+                                </constraints>
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="SRD-79-sos" firstAttribute="trailing" secondItem="Xza-Lw-bvS" secondAttribute="trailing" id="D56-gu-FeD"/>
-                            <constraint firstItem="ic5-lE-vok" firstAttribute="trailing" secondItem="SRD-79-sos" secondAttribute="trailing" id="Gc8-wP-ghU"/>
-                            <constraint firstItem="ic5-lE-vok" firstAttribute="leading" secondItem="SRD-79-sos" secondAttribute="leading" id="OR2-dn-K8o"/>
                             <constraint firstItem="ic5-lE-vok" firstAttribute="top" secondItem="Xza-Lw-bvS" secondAttribute="top" id="QSv-Wz-xzQ"/>
-                            <constraint firstItem="SRD-79-sos" firstAttribute="leading" secondItem="Xza-Lw-bvS" secondAttribute="leading" id="TLZ-y4-i6S"/>
-                            <constraint firstItem="LRJ-hm-2WK" firstAttribute="trailing" secondItem="SRD-79-sos" secondAttribute="trailing" id="U5g-vX-Af5"/>
-                            <constraint firstItem="LRJ-hm-2WK" firstAttribute="leading" secondItem="SRD-79-sos" secondAttribute="leading" id="ddQ-sW-l3m"/>
-                            <constraint firstItem="SRD-79-sos" firstAttribute="top" secondItem="ic5-lE-vok" secondAttribute="bottom" constant="8" id="mhK-HT-aSf"/>
+                            <constraint firstItem="LRJ-hm-2WK" firstAttribute="centerX" secondItem="SRD-79-sos" secondAttribute="centerX" id="TnH-DB-uo7"/>
+                            <constraint firstItem="LRJ-hm-2WK" firstAttribute="leading" secondItem="ic5-lE-vok" secondAttribute="leading" id="Zjy-18-xTF"/>
+                            <constraint firstItem="LRJ-hm-2WK" firstAttribute="leading" secondItem="TaI-uU-9by" secondAttribute="leading" id="bas-Mp-lbb"/>
+                            <constraint firstItem="LRJ-hm-2WK" firstAttribute="top" secondItem="SRD-79-sos" secondAttribute="bottom" constant="8" id="igO-MN-lxa"/>
+                            <constraint firstItem="LRJ-hm-2WK" firstAttribute="trailing" secondItem="ic5-lE-vok" secondAttribute="trailing" id="jSt-5S-TLb"/>
                             <constraint firstItem="LRJ-hm-2WK" firstAttribute="bottom" secondItem="Xza-Lw-bvS" secondAttribute="bottom" id="pXB-vM-hmK"/>
-                            <constraint firstItem="LRJ-hm-2WK" firstAttribute="top" secondItem="SRD-79-sos" secondAttribute="bottom" constant="8" id="xdi-bx-e5H"/>
+                            <constraint firstItem="SRD-79-sos" firstAttribute="top" secondItem="ic5-lE-vok" secondAttribute="bottom" constant="8" id="phH-ql-477"/>
+                            <constraint firstAttribute="trailing" secondItem="SRD-79-sos" secondAttribute="trailing" constant="2" id="tFf-ik-sd7"/>
+                            <constraint firstItem="SRD-79-sos" firstAttribute="leading" secondItem="Xza-Lw-bvS" secondAttribute="leading" constant="2" id="tWF-R4-9XR"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Xza-Lw-bvS"/>
                     </view>
                     <navigationItem key="navigationItem" title="BlackTweeter ✊🏾" id="N3R-qg-Bi5"/>
                     <connections>
                         <outlet property="categoryLabel" destination="giG-tK-hHP" id="Ktv-be-a21"/>
+                        <outlet property="labelBackground" destination="SRD-79-sos" id="gUt-fz-EPk"/>
                         <outlet property="mainCollectionView" destination="ic5-lE-vok" id="a2u-Kc-Hyk"/>
                         <outlet property="theTableview" destination="LRJ-hm-2WK" id="SzD-DD-mDW"/>
                     </connections>
@@ -1203,9 +1217,130 @@
             </objects>
             <point key="canvasLocation" x="1708" y="663"/>
         </scene>
+        <!--View Controller-->
+        <scene sceneID="5j0-pt-PiT">
+            <objects>
+                <viewController storyboardIdentifier="EULAViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="0YA-BI-wX0" customClass="EULAViewController" customModule="BlackTweeter2" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="IgH-Ac-6c2">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ofW-hH-LXF">
+                                <rect key="frame" x="123" y="617" width="129" height="30"/>
+                                <state key="normal" title="Accept &amp; Continue">
+                                    <color key="titleColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="Accept:" destination="0YA-BI-wX0" eventType="touchUpInside" id="yxJ-G2-f2c"/>
+                                </connections>
+                            </button>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="66s-SC-H5R">
+                                <rect key="frame" x="0.0" y="72" width="375" height="537"/>
+                                <subviews>
+                                    <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Agz-sh-wTW">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="537"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <string key="text">
+End-User License Agreement (EULA) of BlackTweeter
+
+This End-User License Agreement ("EULA") is a legal agreement between you and Ember Roar Studios
+
+HARASSMENT, BULLYING, ABUSE AND OBJECTIONABLE CONTENT IS NOT TOLERATED
+
+Any form of harassment, bullying, abuse and/or objectionable content will not be allowed and will result in a swift banning of your account from this app. Your account will also be banned from using Twitter's site and resources
+
+This EULA agreement governs your acquisition and use of our BlackTweeter software ("Software") directly from Ember Roar Studios or indirectly through a Ember Roar Studios authorized reseller or distributor (a "Reseller").
+
+Please read this EULA agreement carefully before completing the installation process and using the BlackTweeter software. It provides a license to use the BlackTweeter software and contains warranty information and liability disclaimers.
+
+If you register for a free trial of the BlackTweeter software, this EULA agreement will also govern that trial. By clicking "accept" or installing and/or using the BlackTweeter software, you are confirming your acceptance of the Software and agreeing to become bound by the terms of this EULA agreement.
+
+If you are entering into this EULA agreement on behalf of a company or other legal entity, you represent that you have the authority to bind such entity and its affiliates to these terms and conditions. If you do not have such authority or if you do not agree with the terms and conditions of this EULA agreement, do not install or use the Software, and you must not accept this EULA agreement.
+
+This EULA agreement shall apply only to the Software supplied by Ember Roar Studios herewith regardless of whether other software is referred to or described herein. The terms also apply to any Ember Roar Studios updates, supplements, Internet-based services, and support services for the Software, unless other terms accompany those items on delivery. If so, those terms apply.
+License Grant
+
+Ember Roar Studios hereby grants you a personal, non-transferable, non-exclusive licence to use the BlackTweeter software on your devices in accordance with the terms of this EULA agreement.
+
+You are permitted to load the BlackTweeter software (for example a PC, laptop, mobile or tablet) under your control. You are responsible for ensuring your device meets the minimum requirements of the BlackTweeter software.
+
+You are not permitted to:
+
+    Edit, alter, modify, adapt, translate or otherwise change the whole or any part of the Software nor permit the whole or any part of the Software to be combined with or become incorporated in any other software, nor decompile, disassemble or reverse engineer the Software or attempt to do any such things
+    Reproduce, copy, distribute, resell or otherwise use the Software for any commercial purpose
+    Allow any third party to use the Software on behalf of or for the benefit of any third party
+    Use the Software in any way which breaches any applicable local, national or international law
+    use the Software for any purpose that Ember Roar Studios considers is a breach of this EULA agreement
+
+Intellectual Property and Ownership
+
+Ember Roar Studios shall at all times retain ownership of the Software as originally downloaded by you and all subsequent downloads of the Software by you. The Software (and the copyright, and other intellectual property rights of whatever nature in the Software, including any modifications made thereto) are and shall remain the property of Ember Roar Studios.
+
+Ember Roar Studios reserves the right to grant licences to use the Software to third parties.
+Termination
+
+This EULA agreement is effective from the date you first use the Software and shall continue until terminated. You may terminate it at any time upon written notice to Ember Roar Studios.
+
+This EULA was created by eulatemplate.com for BlackTweeter
+
+It will also terminate immediately if you fail to comply with any term of this EULA agreement. Upon such termination, the licenses granted by this EULA agreement will immediately terminate and you agree to stop all access and use of the Software. The provisions that by their nature continue and survive will survive any termination of this EULA agreement.
+Governing Law
+
+This EULA agreement, and any dispute arising out of or in connection with this EULA agreement, shall be governed by and construed in accordance with the laws of United States
+</string>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                    </textView>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Agz-sh-wTW" firstAttribute="top" secondItem="66s-SC-H5R" secondAttribute="top" id="Quz-nw-n9C"/>
+                                    <constraint firstItem="Agz-sh-wTW" firstAttribute="centerX" secondItem="66s-SC-H5R" secondAttribute="centerX" id="RO8-CE-FyT"/>
+                                    <constraint firstAttribute="trailing" secondItem="Agz-sh-wTW" secondAttribute="trailing" id="a9p-IF-cLg"/>
+                                    <constraint firstItem="Agz-sh-wTW" firstAttribute="centerY" secondItem="66s-SC-H5R" secondAttribute="centerY" id="ewo-MY-00H"/>
+                                    <constraint firstAttribute="bottom" secondItem="Agz-sh-wTW" secondAttribute="bottom" id="l8G-ls-sns"/>
+                                    <constraint firstItem="Agz-sh-wTW" firstAttribute="leading" secondItem="66s-SC-H5R" secondAttribute="leading" id="zpH-K5-hjP"/>
+                                </constraints>
+                            </scrollView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="66s-SC-H5R" firstAttribute="leading" secondItem="cpF-Yi-HeK" secondAttribute="leading" id="7aj-r6-HED"/>
+                            <constraint firstItem="66s-SC-H5R" firstAttribute="top" secondItem="cpF-Yi-HeK" secondAttribute="top" constant="8" id="ODV-Qh-Tbm"/>
+                            <constraint firstItem="ofW-hH-LXF" firstAttribute="top" secondItem="66s-SC-H5R" secondAttribute="bottom" constant="8" id="XM8-4p-d1d"/>
+                            <constraint firstItem="cpF-Yi-HeK" firstAttribute="bottom" secondItem="ofW-hH-LXF" secondAttribute="bottom" constant="20" id="jjv-8P-yO1"/>
+                            <constraint firstItem="66s-SC-H5R" firstAttribute="trailing" secondItem="cpF-Yi-HeK" secondAttribute="trailing" id="nVG-PA-5ho"/>
+                            <constraint firstItem="ofW-hH-LXF" firstAttribute="centerX" secondItem="cpF-Yi-HeK" secondAttribute="centerX" id="p2I-h0-be8"/>
+                            <constraint firstItem="ofW-hH-LXF" firstAttribute="top" secondItem="66s-SC-H5R" secondAttribute="bottom" constant="8" id="uCC-d3-Oxh"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="cpF-Yi-HeK"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="lnX-36-LdJ"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7E0-Ta-XFn" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1050" y="663"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="BFv-CM-DMU">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="DyN-Fp-JXt" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="FZb-7R-gCO">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="0YA-BI-wX0" kind="relationship" relationship="rootViewController" id="dfq-HD-3Yp"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bGY-5X-0SD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="294" y="663"/>
+        </scene>
     </scenes>
     <resources>
-        <image name="blackTweeterIconCut" width="246" height="240"/>
+        <image name="blackTweeterIconCut" width="493" height="481"/>
         <image name="button:1BS-p7-d2j:image" width="19" height="11">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGVVZYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK8QEgcI
@@ -6309,9 +6444,9 @@ AAAAAAAAPgw
 </mutableData>
         </image>
         <image name="menu_icon" width="128" height="128"/>
-        <image name="message" width="25" height="25"/>
-        <image name="sign" width="25" height="25"/>
-        <image name="timeline" width="25" height="25"/>
+        <image name="message" width="40" height="40"/>
+        <image name="sign" width="40" height="40"/>
+        <image name="timeline" width="40" height="40"/>
     </resources>
     <color key="tintColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>

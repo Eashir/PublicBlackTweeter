@@ -22,6 +22,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate, UINaviga
     
     override func viewDidLoad() {
         self.delegate = self
+        self.tabBarController?.delegate = self
         
         super.viewDidLoad()
         
@@ -83,6 +84,7 @@ class TabBarController: UITabBarController, UITabBarControllerDelegate, UINaviga
             if (self.selectedIndex == 0){
 //                let myViewController = selectedViewController as! CollectionViewController
 //                myViewController.scrollToFirstRow()
+
                  print("im in the collection view controller")
             }
             return false

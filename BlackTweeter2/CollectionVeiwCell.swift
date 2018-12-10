@@ -15,6 +15,7 @@ class CollectionViewCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        categoryPic.layer.cornerRadius = 8.0
     }
     
 }

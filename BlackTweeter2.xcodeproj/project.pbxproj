@@ -55,6 +55,9 @@
 		8FA0D50D21098CDF008F636E /* FBCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0D50C21098CDF008F636E /* FBCategory.swift */; };
 		8FA0D50F21098E3B008F636E /* FBTweet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA0D50E21098E3B008F636E /* FBTweet.swift */; };
 		8FA1CC1E1FBF38AB007F0D46 /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA1CC1D1FBF38AB007F0D46 /* AppConstants.swift */; };
+		8FA9F61921BD83A000606CF9 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842E15A21BCA6C9005F4139 /* SwifteriOS.framework */; };
+		8FA9F61A21BD83A000606CF9 /* SwifteriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = F842E15A21BCA6C9005F4139 /* SwifteriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		8FA9F62D21BE33D900606CF9 /* EULAViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8FA9F62C21BE33D900606CF9 /* EULAViewController.swift */; };
 		8FABCBA01FFEA83400B3F672 /* MMDrawerVisualState.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FABCB981FFEA83300B3F672 /* MMDrawerVisualState.m */; };
 		8FABCBA11FFEA83400B3F672 /* MMDrawerBarButtonItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FABCB991FFEA83400B3F672 /* MMDrawerBarButtonItem.m */; };
 		8FABCBA21FFEA83400B3F672 /* UIViewController+MMDrawerController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8FABCB9E1FFEA83400B3F672 /* UIViewController+MMDrawerController.m */; };
@@ -73,7 +76,6 @@
 		B721B09BAF0A4A01CEF530C0 /* Pods_BlackTweeter2Tests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7ABCD3D01A93FFA9126EC649 /* Pods_BlackTweeter2Tests.framework */; };
 		B90F5E18256921F515F8F27C /* Pods_BlackTweeter2UITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FF9744E7A9C6F039215EE29F /* Pods_BlackTweeter2UITests.framework */; };
 		C893D52E67270DAFD6F465A7 /* Pods_BlackTweeter2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 19FA025AFAC3BEB36885176B /* Pods_BlackTweeter2.framework */; };
-		F842E16721BCA811005F4139 /* SwifteriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F842E15A21BCA6C9005F4139 /* SwifteriOS.framework */; };
 		F854358A21B8B0630011F5BE /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F854358921B8B0630011F5BE /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -91,6 +93,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8F4DB0061F902E6C00CDD427;
 			remoteInfo = BlackTweeter2;
+		};
+		8FA9F61B21BD83A000606CF9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F842E14F21BCA6C9005F4139 /* Swifter.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8B9F50ED1944A5AB00894629;
+			remoteInfo = SwifteriOS;
 		};
 		F842E15721BCA6C9005F4139 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -136,6 +145,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				8FA9F61A21BD83A000606CF9 /* SwifteriOS.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -212,6 +222,7 @@
 		8FA0D50C21098CDF008F636E /* FBCategory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBCategory.swift; sourceTree = "<group>"; };
 		8FA0D50E21098E3B008F636E /* FBTweet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBTweet.swift; sourceTree = "<group>"; };
 		8FA1CC1D1FBF38AB007F0D46 /* AppConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		8FA9F62C21BE33D900606CF9 /* EULAViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EULAViewController.swift; sourceTree = "<group>"; };
 		8FABCB971FFEA83300B3F672 /* MMDrawerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MMDrawerController.h; sourceTree = "<group>"; };
 		8FABCB981FFEA83300B3F672 /* MMDrawerVisualState.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerVisualState.m; sourceTree = "<group>"; };
 		8FABCB991FFEA83400B3F672 /* MMDrawerBarButtonItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MMDrawerBarButtonItem.m; sourceTree = "<group>"; };
@@ -244,8 +255,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F842E16721BCA811005F4139 /* SwifteriOS.framework in Frameworks */,
 				C893D52E67270DAFD6F465A7 /* Pods_BlackTweeter2.framework in Frameworks */,
+				8FA9F61921BD83A000606CF9 /* SwifteriOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -395,6 +406,7 @@
 				8FAE5AF01FBD5C3300972EAE /* WriteViewController.swift */,
 				8F1B576A1FFDB4EC009227EA /* TabBarController.swift */,
 				8F84462F2135C22B0067808A /* OnBoardMain.swift */,
+				8FA9F62C21BE33D900606CF9 /* EULAViewController.swift */,
 				8F190C0E21379EE900639E98 /* OnBoardSubclass.swift */,
 				8FE4B9DF20AB3AAA00C5D6FC /* Asset2.xcassets */,
 				8F4DB0181F902E6C00CDD427 /* Info.plist */,
@@ -520,6 +532,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				8FA9F61C21BD83A000606CF9 /* PBXTargetDependency */,
 			);
 			name = BlackTweeter2;
 			productName = BlackTweeter2;
@@ -936,6 +949,7 @@
 				8F721BC11FF6EB3A00E64D38 /* AuthViewReal.swift in Sources */,
 				8F3658972055D31700EF2115 /* UITextViewHashtagExtension.swift in Sources */,
 				8FCFB7601FD9BD64007D87E6 /* LatestCell.swift in Sources */,
+				8FA9F62D21BE33D900606CF9 /* EULAViewController.swift in Sources */,
 				8FABCBA11FFEA83400B3F672 /* MMDrawerBarButtonItem.m in Sources */,
 				8F288BFF2060971B0079C4B3 /* FXBlurView.m in Sources */,
 				8F4DB00B1F902E6C00CDD427 /* AppDelegate.swift in Sources */,
@@ -989,6 +1003,11 @@
 			isa = PBXTargetDependency;
 			target = 8F4DB0061F902E6C00CDD427 /* BlackTweeter2 */;
 			targetProxy = 8F4DB0291F902E6C00CDD427 /* PBXContainerItemProxy */;
+		};
+		8FA9F61C21BD83A000606CF9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwifteriOS;
+			targetProxy = 8FA9F61B21BD83A000606CF9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
